@@ -1,0 +1,269 @@
+2022-03-04 11:02:31,278 - INFO (extract_data): Loading persons
+2022-03-04 11:02:57,582 - INFO (extract_data): Loading households
+2022-03-04 11:03:00,718 - INFO (extract_data): Loading mgraBasedInput
+2022-03-04 11:03:00,885 - INFO (extract_data): Loading individualTrips
+2022-03-04 11:04:43,122 - INFO (extract_data): Loading jointTrips
+2022-03-04 11:04:54,767 - INFO (extract_data): Loading internalExternalTrips
+2022-03-04 11:04:55,819 - INFO (extract_data): Loading airportCBXTrips
+2022-03-04 11:04:55,857 - INFO (extract_data): Loading airportSANTrips
+2022-03-04 11:04:56,068 - INFO (extract_data): Loading commercialVehicleTrips
+2022-03-04 11:05:02,837 - INFO (extract_data): Loading crossBorderTrips
+2022-03-04 11:05:05,825 - INFO (extract_data): Loading externalInternalTrips
+2022-03-04 11:05:19,025 - INFO (extract_data): Loading externalExternalTrips
+2022-03-04 11:05:19,043 - INFO (extract_data): Loading truckTrips
+2022-03-04 11:05:21,754 - INFO (extract_data): Loading visitorTrips
+2022-03-04 11:05:22,703 - INFO (extract_data): Loading hwyload_AM
+2022-03-04 11:05:23,057 - INFO (extract_data): Loading hwyload_EA
+2022-03-04 11:05:23,347 - INFO (extract_data): Loading hwyload_EV
+2022-03-04 11:05:23,671 - INFO (extract_data): Loading hwyload_MD
+2022-03-04 11:05:24,017 - INFO (extract_data): Loading hwyload_PM
+2022-03-04 11:05:24,364 - INFO (extract_data): Loading hwyTcad
+2022-03-04 11:05:26,506 - INFO (extract_data): Loading transit_onoff
+2022-03-04 11:05:26,866 - INFO (extract_data): Loading mgra_city_map
+2022-03-04 11:05:26,887 - INFO (extract_data): Loading mgra_mohub_urban_core
+2022-03-04 11:05:26,900 - INFO (extract_data): Loading mgra_city_cpa_map
+2022-03-04 11:05:26,920 - INFO (extract_data): Loading sv_ec_mgras
+2022-03-04 11:05:26,943 - INFO (process): Renaming airportCBXTrips columns using {'tripPurpose': 'tripPurposeDestination'}
+2022-03-04 11:05:26,952 - INFO (process): Renaming airportSANTrips columns using {'tripPurpose': 'tripPurposeDestination'}
+2022-03-04 11:05:26,959 - INFO (process): Adding column 'tripPurposeDestination' to internalExternalTrips
+2022-03-04 11:05:26,962 - INFO (process): Adding column 'tripPurposeDestination' to externalExternalTrips
+2022-03-04 11:05:26,964 - INFO (process): Renaming externalInternalTrips columns using {'tripPurpose': 'tripPurposeDestination'}
+2022-03-04 11:05:27,154 - INFO (process): Adding column 'tripPurposeDestination' to truckTrips
+2022-03-04 11:05:27,159 - INFO (process): Renaming visitorTrips columns using {'tripPurpose': 'tripPurposeDestination'}
+2022-03-04 11:05:27,191 - INFO (process): Raw evaluating households['homeCity'] = households['homeMGRA'].replace(mgra_city_map.set_index('MGRA')['city_name'].to_dict())
+2022-03-04 11:06:22,923 - INFO (process): Raw evaluating households['homeCityCPA'] = households['homeMGRA'].replace(mgra_city_cpa_map.set_index('MGRA')['Name'].to_dict())
+2022-03-04 11:07:17,669 - INFO (process): Raw evaluating persons['telecommuteChoice'] = persons['telecommuteChoice'].str.replace(' a Week', '')
+2022-03-04 11:07:18,683 - INFO (concat): Concatenating tables ['individualTrips', 'jointTrips', 'internalExternalTrips', 'airportCBXTrips', 'airportSANTrips', 'commercialVehicleTrips', 'crossBorderTrips', 'externalInternalTrips', 'externalExternalTrips', 'truckTrips', 'visitorTrips'] into trips
+2022-03-04 11:07:27,331 - INFO (concat): Concatenating tables ['hwyload_AM.csv', 'hwyload_EA.csv', 'hwyload_EV.csv', 'hwyload_MD.csv', 'hwyload_PM.csv'] into highway_load
+2022-03-04 11:07:27,374 - INFO (merge): Merging tables persons, households into synthetic
+2022-03-04 11:07:30,227 - INFO (merge): Merging tables trips, synthetic into trips
+2022-03-04 11:07:50,947 - INFO (process): Binning age values in persons using [0,18,30,45,60, 100]
+2022-03-04 11:07:51,607 - INFO (process): Replacing age_bin values in persons using {'.-0.001.*': '0-18', '.18.0.*': '18-30', '.30.0.*': '30-45', '.45.0.*': '45-60', '.60.0.*': '60-100'}, regex=True
+2022-03-04 11:08:19,289 - INFO (process): Replacing race values in persons using {'White Alone': 'White', 'Asian Alone': 'Asian', 'Black.*': 'Black', 'Two or More Major Race Groups': 'Two or More', 'Some Other.*': 'Other', 'Native Hawaiian.*': 'Other', 'American Indian.*': 'Other'}, regex=True
+2022-03-04 11:08:48,432 - INFO (process): Replacing tripMode values in trips using {'Drive Alone': 'SOV', 'Shared Ride 2': 'HOV', 'Shared Ride 3+': 'HOV', 'Bike': 'Non-Motorized', 'Walk': 'Non-Motorized', 'Micro-Mobility': 'Other', 'Non-Pooled TNC': 'Other', 'Pooled TNC': 'Other', 'School Bus': 'Other', 'Taxi': 'Other', 'Truck': 'Other'}
+2022-03-04 11:08:53,966 - INFO (process): Replacing tripPurposeDestination values in trips using {'work related':'Work', 'Work-Based': 'Work', 'Visiting': 'Other', 'Visit': 'Other', 'Resident Personal': 'Other', 'Visitor Personal': 'Other', 'External': 'Other', 'Unknown': 'Other', 'Non-Work':'Other', 'Eating Out': 'Dining', 'Dining': 'Dining', 'Discretionary': 'Discretionary', 'Recreation': 'Discretionary', 'Resident Business': 'Other', 'Visitor Business': 'Other', 'Not Applicable': 'Other', 'University': 'School', 'Goods': 'Other', 'Return to Establishment': 'Other', 'Cargo': 'Other'}
+2022-03-04 11:09:02,725 - INFO (process): Renaming trips columns using {'table': 'model'}
+2022-03-04 11:09:53,032 - INFO (process): Raw evaluating trips['model'] = trips['model'].str.replace('Trips', '')
+2022-03-04 11:10:05,453 - INFO (process): Replacing departTimeFiveTod values in trips using {1: 'EA', 2: 'AM', 3: 'MD', 4: 'PM', 5: 'EV'}
+2022-03-04 11:10:11,156 - INFO (process): Replacing tripMode values in trips using {'Light Heavy Duty Truck': 'Truck', 'Medium Heavy Duty Truck': 'Truck', 'Heavy Heavy Duty Truck': 'Truck'}
+2022-03-04 11:10:13,227 - INFO (process): Raw evaluating trips['tripMode'] = np.select([(trips['tripMode'].str.contains('to Transit'))], ['Transit'], default=trips['tripMode'])
+2022-03-04 11:10:21,381 - INFO (process): Raw evaluating trips['vmt'] = (trips['distanceDrive'].fillna(0) + trips['distanceDriveTransit'].fillna(0))*trips['weightTrip']
+2022-03-04 11:10:21,699 - INFO (process): Adding column 'distance' to trips
+2022-03-04 11:10:22,357 - INFO (process): Adding column 'time' to trips
+2022-03-04 11:10:22,529 - INFO (process): Replacing MODE values in transit_onoff using {'PREM': 'Premium Transit', 'BUS': 'Local Bus', 'ALLPEN': 'Local Bus and Premium Transit'}
+2022-03-04 11:10:22,584 - INFO (process): Replacing ACCESSMODE values in transit_onoff using {'KNR': 'Kiss and Ride to Transit', 'PNR': 'Park and Ride to Transit', 'WLK': 'Walk to Transit'}
+2022-03-04 11:10:22,629 - INFO (process): Replacing table values in highway_load using {"hwyload_EA": "EA","hwyload_AM": "AM","hwyload_MD": "MD","hwyload_PM": "PM","hwyload_EV": "EV"}
+2022-03-04 11:10:22,669 - INFO (process): Adding column 'AB_Flow_Auto' to highway_load
+2022-03-04 11:10:22,729 - INFO (process): Adding column 'BA_Flow_Auto' to highway_load
+2022-03-04 11:10:22,759 - INFO (process): Adding column 'AB_Flow_Truck' to highway_load
+2022-03-04 11:10:22,789 - INFO (process): Adding column 'BA_Flow_Truck' to highway_load
+2022-03-04 11:10:22,809 - INFO (process): Adding column 'AB_Flow' to highway_load
+2022-03-04 11:10:22,819 - INFO (process): Adding column 'BA_flow' to highway_load
+2022-03-04 11:10:22,829 - INFO (process): Raw evaluating highway_load = highway_load.fillna(0)
+2022-03-04 11:10:23,069 - INFO (process): Raw evaluating highway_network = pd.wide_to_long(df=hwyTcad,stubnames=["ABTM","BATM","ABTX","BATX","ABPRELOAD","BAPRELOAD"],i=["ID","Length","IFC"],j="timePeriod",sep="_",suffix="\w+").reset_index()
+2022-03-04 11:10:36,265 - INFO (process): Raw evaluating highway_network = highway_network.fillna(0)
+2022-03-04 11:10:36,807 - INFO (process): Replacing IFC values in highway_network using {1:"Freeway",2:"Prime Arterial",3:"Major Arterial",4:"Collector",5:"Local Collector",6:"Rural Coolector",7:"Local Road",8:"Freeway Connector Ramp",9:"Local Ramp",10:"Zone Connector"}
+2022-03-04 11:10:36,815 - INFO (merge): Merging tables highway_network, highway_load into network
+2022-03-04 11:10:49,719 - INFO (process): Raw evaluating mh_trips = trips[(trips['originMGRA'].isin(mgra_mohub_urban_core['MGRA'])) | (trips['destinationMGRA'].isin(mgra_mohub_urban_core['MGRA']) )]
+2022-03-04 11:11:06,427 - INFO (process): Raw evaluating ec_trips = trips[trips['destinationMGRA'].isin(sv_ec_mgras['MGRA'])]
+2022-03-04 11:11:07,451 - INFO (process): Adding column 'vmt_auto' to network
+2022-03-04 11:11:07,486 - INFO (process): Adding column 'vmt_truck' to network
+2022-03-04 11:11:07,501 - INFO (process): Adding column 'vmt_bus' to network
+2022-03-04 11:11:07,513 - INFO (process): Adding column 'vmt_total' to network
+2022-03-04 11:11:07,525 - INFO (process): Adding column 'vht_auto' to network
+2022-03-04 11:11:07,537 - INFO (process): Adding column 'vht_truck' to network
+2022-03-04 11:11:07,549 - INFO (process): Adding column 'vht_bus' to network
+2022-03-04 11:11:07,561 - INFO (process): Adding column 'vht_total' to network
+2022-03-04 11:11:07,573 - INFO (process): Adding column 'vhd_auto' to network
+2022-03-04 11:11:07,587 - INFO (process): Adding column 'vhd_truck' to network
+2022-03-04 11:11:07,603 - INFO (process): Adding column 'vhd_bus' to network
+2022-03-04 11:11:07,617 - INFO (process): Raw evaluating network[['vhd_auto','vhd_truck','vhd_bus']] = network[['vhd_auto','vhd_truck','vhd_bus']].clip(0)
+2022-03-04 11:11:07,992 - INFO (process): Adding column 'vhd_total' to network
+2022-03-04 11:11:08,019 - INFO (process): Raw evaluating ec_trips['originCity'] = ec_trips['originMGRA'].replace(mgra_city_map.set_index('MGRA')['city_name'].to_dict())
+2022-03-04 11:11:26,327 - INFO (process): Raw evaluating ec_trips['destinationCity'] = ec_trips['destinationMGRA'].replace(mgra_city_map.set_index('MGRA')['city_name'].to_dict())
+2022-03-04 11:11:38,705 - INFO (process): Raw evaluating ec_trips['originCityCPA'] = ec_trips['originMGRA'].replace(mgra_city_cpa_map.set_index('MGRA')['Name'].to_dict())
+2022-03-04 11:11:55,447 - INFO (process): Raw evaluating ec_trips['destinationCityCPA'] = ec_trips['destinationMGRA'].replace(mgra_city_cpa_map.set_index('MGRA')['Name'].to_dict())
+2022-03-04 11:12:06,413 - INFO (eval_expressions): Evaluating households['hhId'].count()
+2022-03-04 11:12:06,413 - INFO (eval_expressions): Evaluating households['hhIncome'].mean()
+2022-03-04 11:12:06,423 - INFO (eval_expressions): Evaluating households['hhPersons'].mean()
+2022-03-04 11:12:06,431 - INFO (eval_expressions): Evaluating households['autos'].mean()
+2022-03-04 11:12:06,433 - INFO (eval_expressions): Evaluating persons['personId'].count()
+2022-03-04 11:12:06,443 - INFO (eval_expressions): Evaluating persons.query("employmentStatus in ['Employed Full-Time','Employed Part-Time']", engine="python")['personId'].count()
+2022-03-04 11:12:07,979 - INFO (eval_expressions): Evaluating persons.query("(employmentStatus in ['Employed Full-Time','Employed Part-Time'])  & (telecommuteChoice != 'No telecommute')", engine="python")['personId'].count()
+2022-03-04 11:12:08,287 - INFO (eval_expressions): Evaluating network['vmt_total'].sum()
+2022-03-04 11:12:08,289 - INFO (eval_expressions): Evaluating network['vht_total'].sum()
+2022-03-04 11:12:08,291 - INFO (eval_expressions): Evaluating network['vhd_total'].sum()
+2022-03-04 11:12:08,291 - INFO (eval_expressions): Evaluating trips['weightTrip'].sum()
+2022-03-04 11:12:08,333 - INFO (eval_expressions): Evaluating trips['weightPersonTrip'].sum()
+2022-03-04 11:12:08,396 - INFO (eval_expressions): Evaluating trips.query("model in ['individual', 'internalExternal', 'joint']", engine="python")['weightPersonTrip'].sum()
+2022-03-04 11:12:17,976 - INFO (eval_expressions): Running measure '_num_res_p_trips / num_persons' on summary
+2022-03-04 11:12:17,976 - INFO (eval_expressions): Evaluating trips.query("employmentStatus in ['Employed Full-Time','Employed Part-Time']", engine="python")['weightPersonTrip'].sum()
+2022-03-04 11:12:23,127 - INFO (eval_expressions): Running measure '_num_worker_p_trips / num_workers' on summary
+2022-03-04 11:12:23,129 - INFO (eval_expressions): Evaluating persons['race'].value_counts()
+2022-03-04 11:12:23,250 - INFO (eval_expressions): Running measure '(race_count / sum(race_count)) * 100' on pop_by_race
+2022-03-04 11:12:23,250 - INFO (eval_expressions): Evaluating persons['age_bin'].value_counts()
+2022-03-04 11:12:23,380 - INFO (eval_expressions): Running measure '(age_count / sum(age_count)) * 100' on pop_by_age
+2022-03-04 11:12:23,382 - INFO (eval_expressions): Evaluating transit_onoff.groupby(['MODE', 'ACCESSMODE', 'TOD'], dropna=False)['BOARDINGS'].sum()
+2022-03-04 11:12:23,441 - INFO (eval_expressions): Evaluating persons.query("(employmentStatus in ['Employed Full-Time','Employed Part-Time'])", engine="python").groupby(['telecommuteChoice'], dropna=False)['personId'].count()
+2022-03-04 11:12:24,039 - INFO (eval_expressions): Running measure 'num_workers/sum(num_workers)' on tele_choice
+2022-03-04 11:12:24,039 - INFO (eval_expressions): Evaluating trips.query("employmentStatus in ['Employed Full-Time','Employed Part-Time']", engine="python").groupby(['telecommuteChoice', 'tripMode'], dropna=False)['weightTrip'].sum()
+2022-03-04 11:12:30,026 - INFO (eval_expressions): Evaluating trips.query("employmentStatus in ['Employed Full-Time','Employed Part-Time']", engine="python").groupby(['telecommuteChoice'], dropna=False)['weightTrip'].sum()
+2022-03-04 11:12:35,446 - INFO (eval_expressions): Running measure '_tele_mode_count / _tele_count' on mode_share_by_tele
+2022-03-04 11:12:35,446 - INFO (eval_expressions): Evaluating trips.groupby(['tripMode'], dropna=False)['weightTrip'].sum()
+2022-03-04 11:12:36,366 - INFO (eval_expressions): Running measure '(_mode_counts / num_v_trips) * 100' on mode_share
+2022-03-04 11:12:36,374 - INFO (eval_expressions): Evaluating trips.groupby(['tripPurposeDestination'], dropna=False)['weightTrip'].sum()
+2022-03-04 11:12:37,348 - INFO (eval_expressions): Running measure '(purpose_counts / num_v_trips) * 100' on purpose_share
+2022-03-04 11:12:37,356 - INFO (eval_expressions): Evaluating households['autos'].value_counts()
+2022-03-04 11:12:37,356 - INFO (eval_expressions): Running measure '(ao_counts / sum(ao_counts)) * 100' on ao_dist
+2022-03-04 11:12:37,367 - INFO (eval_expressions): Evaluating households.groupby(['homeMGRA'], dropna=False)['autos'].mean()
+2022-03-04 11:12:37,398 - INFO (eval_expressions): Evaluating trips.groupby(['originMGRA', 'destinationMGRA'], dropna=False)['weightTrip'].sum()
+2022-03-04 11:12:42,788 - INFO (eval_expressions): Evaluating trips.groupby(['originTAZ', 'destinationTAZ'], dropna=False)['weightTrip'].sum()
+2022-03-04 11:12:46,803 - INFO (eval_expressions): Evaluating trips['weightTrip'].sum()
+2022-03-04 11:12:46,854 - INFO (eval_expressions): Evaluating trips.groupby(['departTimeFiveTod'], dropna=False)['weightTrip'].sum()
+2022-03-04 11:12:47,712 - INFO (eval_expressions): Running measure '(trips_by_tod / _num_resident_v_trips) * 100' on trips_by_tod
+2022-03-04 11:12:47,714 - INFO (eval_expressions): Evaluating trips.groupby(['tripMode'], dropna=False)['distance'].sum()
+2022-03-04 11:12:48,617 - INFO (eval_expressions): Running measure '_tot_dist_by_mode/_mode_counts' on length_by_mode
+2022-03-04 11:12:48,617 - INFO (eval_expressions): Evaluating trips.groupby(['tripMode'], dropna=False)['time'].sum()
+2022-03-04 11:12:49,520 - INFO (eval_expressions): Running measure '_tot_time_by_mode/_mode_counts' on length_by_mode
+2022-03-04 11:12:49,528 - INFO (eval_expressions): Evaluating trips.groupby(['homeMGRA'], dropna=False)['vmt'].sum()
+2022-03-04 11:12:50,014 - INFO (eval_expressions): Evaluating households.groupby(['homeMGRA'], dropna=False)['hhPersons'].sum()
+2022-03-04 11:12:50,055 - INFO (eval_expressions): Running measure '_vmt_per_mgra/_persons_per_mgra' on vmt_per_capita_by_mgra
+2022-03-04 11:12:50,063 - INFO (eval_expressions): Evaluating trips.groupby(['homeTAZ'], dropna=False)['vmt'].sum()
+2022-03-04 11:12:50,509 - INFO (eval_expressions): Evaluating households.groupby(['homeTAZ'], dropna=False)['hhPersons'].sum()
+2022-03-04 11:12:50,542 - INFO (eval_expressions): Running measure '_vmt_per_taz/_persons_per_taz' on vmt_per_capita_by_taz
+2022-03-04 11:12:50,550 - INFO (eval_expressions): Evaluating trips.groupby(['homeCity'], dropna=False)['vmt'].sum()
+2022-03-04 11:12:51,711 - INFO (eval_expressions): Evaluating households.groupby(['homeCity'], dropna=False)['hhPersons'].sum()
+2022-03-04 11:12:51,782 - INFO (eval_expressions): Running measure '_vmt_per_city/_persons_per_city' on vmt_per_capita_by_city
+2022-03-04 11:12:51,790 - INFO (eval_expressions): Evaluating trips.query("(employmentStatus in ['Employed Full-Time','Employed Part-Time'])", engine="python").groupby(['telecommuteChoice'], dropna=False)['vmt'].sum()
+2022-03-04 11:12:57,313 - INFO (eval_expressions): Evaluating persons.query("(employmentStatus in ['Employed Full-Time','Employed Part-Time'])", engine="python").groupby(['telecommuteChoice'], dropna=False)['personId'].count()
+2022-03-04 11:12:57,863 - INFO (eval_expressions): Running measure '_vmt_per_telework/_persons_per_telework' on vmt_per_capita_by_tele
+2022-03-04 11:12:57,863 - INFO (eval_expressions): Evaluating ec_trips.query("tripPurposeDestination == 'Work'", engine="python").groupby(['originMGRA', 'destinationMGRA'], dropna=False)['weightTrip'].sum()
+2022-03-04 11:12:58,230 - INFO (eval_expressions): Evaluating ec_trips.query("tripPurposeDestination == 'Work'", engine="python").groupby(['originTAZ', 'destinationTAZ'], dropna=False)['weightTrip'].sum()
+2022-03-04 11:12:58,351 - INFO (eval_expressions): Evaluating ec_trips.query("tripPurposeDestination == 'Work'", engine="python").groupby(['originCity', 'destinationCity'], dropna=False)['weightTrip'].sum()
+2022-03-04 11:12:58,472 - INFO (eval_expressions): Evaluating ec_trips.query("tripPurposeDestination == 'Work'", engine="python").groupby(['originCityCPA', 'destinationCityCPA'], dropna=False)['weightTrip'].sum()
+2022-03-04 11:12:58,594 - INFO (eval_expressions): Evaluating ec_trips.query("tripPurposeDestination == 'Work'", engine="python")['weightTrip'].sum()
+2022-03-04 11:12:58,695 - INFO (eval_expressions): Evaluating trips.query("tripPurposeDestination == 'Work'", engine="python")['weightTrip'].sum()
+2022-03-04 11:13:02,069 - INFO (eval_expressions): Running measure '(num_v_trips / _num_regional_work_v_trips) * 100' on summary_ec
+2022-03-04 11:13:02,069 - INFO (eval_expressions): Evaluating ec_trips.query("tripPurposeDestination == 'Work'", engine="python").groupby(['tripMode'], dropna=False)['weightTrip'].sum()
+2022-03-04 11:13:02,179 - INFO (eval_expressions): Running measure '(_mode_counts / num_v_trips) * 100' on mode_share_ec
+2022-03-04 11:13:02,182 - INFO (eval_expressions): Evaluating ec_trips.query("tripPurposeDestination == 'Work'", engine="python").groupby(['tripMode'], dropna=False)['distance'].sum()
+2022-03-04 11:13:02,294 - INFO (eval_expressions): Running measure '_tot_dist_by_mode/_mode_counts' on length_by_mode_ec
+2022-03-04 11:13:02,302 - INFO (eval_expressions): Evaluating ec_trips.query("tripPurposeDestination == 'Work'", engine="python").groupby(['tripMode'], dropna=False)['time'].sum()
+2022-03-04 11:13:02,416 - INFO (eval_expressions): Running measure '_tot_time_by_mode/_mode_counts' on length_by_mode_ec
+2022-03-04 11:13:02,416 - INFO (eval_expressions): Evaluating mh_trips['weightTrip'].sum()
+2022-03-04 11:13:02,424 - INFO (eval_expressions): Evaluating trips['weightTrip'].sum()
+2022-03-04 11:13:02,467 - INFO (eval_expressions): Running measure '(num_v_trips / _num_regional_v_trips) * 100' on summary_mh
+2022-03-04 11:13:02,467 - INFO (eval_expressions): Evaluating mh_trips.groupby(['tripMode'], dropna=False)['weightTrip'].sum()
+2022-03-04 11:13:02,589 - INFO (eval_expressions): Running measure '(_mode_counts / num_v_trips) * 100' on mode_share_mh
+2022-03-04 11:13:02,589 - INFO (eval_expressions): Evaluating mh_trips.groupby(['tripMode'], dropna=False)['distance'].sum()
+2022-03-04 11:13:02,711 - INFO (eval_expressions): Running measure '_tot_dist_by_mode/_mode_counts' on length_by_mode_mh
+2022-03-04 11:13:02,711 - INFO (eval_expressions): Evaluating mh_trips.groupby(['tripMode'], dropna=False)['time'].sum()
+2022-03-04 11:13:02,843 - INFO (eval_expressions): Running measure '_tot_time_by_mode/_mode_counts' on length_by_mode_mh
+2022-03-04 11:13:02,843 - INFO (eval_expressions): Evaluating mh_trips.groupby(['originTAZ', 'destinationTAZ'], dropna=False)['weightTrip'].sum()
+2022-03-04 11:13:03,307 - INFO (eval_expressions): Evaluating trips.groupby(['model'], dropna=False)['weightPersonTrip'].sum()
+2022-03-04 11:13:04,559 - INFO (eval_expressions): Evaluating trips.groupby(['model'], dropna=False)['weightTrip'].sum()
+2022-03-04 11:13:05,817 - INFO (coalesce_expressions): Coalescing summary table summary
+2022-03-04 11:13:05,817 - INFO (coalesce_expressions): Coalescing summary table pop_by_race
+2022-03-04 11:13:05,817 - INFO (coalesce_expressions): Coalescing summary table pop_by_age
+2022-03-04 11:13:05,817 - INFO (coalesce_expressions): Coalescing summary table transit_summary
+2022-03-04 11:13:05,825 - INFO (coalesce_expressions): Coalescing summary table tele_choice
+2022-03-04 11:13:05,827 - INFO (coalesce_expressions): Coalescing summary table mode_share_by_tele
+2022-03-04 11:13:05,827 - INFO (coalesce_expressions): Coalescing summary table mode_share
+2022-03-04 11:13:05,827 - INFO (coalesce_expressions): Coalescing summary table purpose_share
+2022-03-04 11:13:05,827 - INFO (coalesce_expressions): Coalescing summary table ao_dist
+2022-03-04 11:13:05,827 - INFO (coalesce_expressions): Coalescing summary table ao_by_mgra
+2022-03-04 11:13:05,835 - INFO (coalesce_expressions): Coalescing summary table mgra_od_flows
+2022-03-04 11:13:06,242 - INFO (coalesce_expressions): Coalescing summary table taz_od_flows
+2022-03-04 11:13:06,442 - INFO (coalesce_expressions): Coalescing summary table trips_by_tod
+2022-03-04 11:13:06,444 - INFO (coalesce_expressions): Coalescing summary table length_by_mode
+2022-03-04 11:13:06,444 - INFO (coalesce_expressions): Coalescing summary table vmt_per_capita_by_mgra
+2022-03-04 11:13:06,444 - INFO (coalesce_expressions): Coalescing summary table vmt_per_capita_by_taz
+2022-03-04 11:13:06,452 - INFO (coalesce_expressions): Coalescing summary table vmt_per_capita_by_city
+2022-03-04 11:13:06,455 - INFO (coalesce_expressions): Coalescing summary table vmt_per_capita_by_tele
+2022-03-04 11:13:06,455 - INFO (coalesce_expressions): Coalescing summary table ec_flows_mgra
+2022-03-04 11:13:06,463 - INFO (coalesce_expressions): Coalescing summary table ec_flows_taz
+2022-03-04 11:13:06,463 - INFO (coalesce_expressions): Coalescing summary table ec_flows_city
+2022-03-04 11:13:06,463 - INFO (coalesce_expressions): Coalescing summary table ec_flows_city_cpa
+2022-03-04 11:13:06,473 - INFO (coalesce_expressions): Coalescing summary table summary_ec
+2022-03-04 11:13:06,473 - INFO (coalesce_expressions): Coalescing summary table mode_share_ec
+2022-03-04 11:13:06,473 - INFO (coalesce_expressions): Coalescing summary table length_by_mode_ec
+2022-03-04 11:13:06,473 - INFO (coalesce_expressions): Coalescing summary table summary_mh
+2022-03-04 11:13:06,473 - INFO (coalesce_expressions): Coalescing summary table mode_share_mh
+2022-03-04 11:13:06,473 - INFO (coalesce_expressions): Coalescing summary table length_by_mode_mh
+2022-03-04 11:13:06,488 - INFO (coalesce_expressions): Coalescing summary table mh_flows_taz
+2022-03-04 11:13:06,532 - INFO (coalesce_expressions): Coalescing summary table trip_model_summary
+2022-03-04 11:13:06,532 - INFO (process): Renaming vmt_per_capita_by_taz columns using {'homeTAZ': 'TAZ'}
+2022-03-04 11:13:06,532 - INFO (process): Renaming mgra_od_flows columns using {'originMGRA':'origin', 'destinationMGRA':'destination', 'od_flows':'count'}
+2022-03-04 11:13:06,675 - INFO (process): Renaming taz_od_flows columns using {'originTAZ':'origin', 'destinationTAZ':'destination', 'od_flows':'count'}
+2022-03-04 11:13:06,726 - INFO (process): Renaming ec_flows_mgra columns using {'originMGRA':'origin', 'destinationMGRA':'destination', 'ec_flows':'count'}
+2022-03-04 11:13:06,734 - INFO (process): Renaming ec_flows_taz columns using {'originTAZ':'origin', 'destinationTAZ':'destination', 'ec_flows':'count'}
+2022-03-04 11:13:06,734 - INFO (process): Renaming ec_flows_city columns using {'originCity':'origin', 'destinationCity':'destination', 'ec_flows':'count'}
+2022-03-04 11:13:06,734 - INFO (process): Renaming ec_flows_city_cpa columns using {'originCityCPA':'origin', 'destinationCityCPA':'destination', 'ec_flows':'count'}
+2022-03-04 11:13:06,734 - INFO (process): Renaming mh_flows_taz columns using {'originTAZ':'origin', 'destinationTAZ':'destination', 'mh_flows':'count'}
+2022-03-04 11:13:06,755 - INFO (process): Raw evaluating mgra_od_flows = mgra_od_flows.sort_values('count', ascending=False).head(100).round(1)
+2022-03-04 11:13:07,582 - INFO (process): Raw evaluating taz_od_flows = taz_od_flows.sort_values('count', ascending=False).head(20).round(1)
+2022-03-04 11:13:08,047 - INFO (process): Raw evaluating ec_flows_mgra = ec_flows_mgra.sort_values('count', ascending=False).head(100).round(1)
+2022-03-04 11:13:08,067 - INFO (process): Raw evaluating ec_flows_taz = ec_flows_taz.sort_values('count', ascending=False)
+2022-03-04 11:13:08,075 - INFO (process): Raw evaluating ec_flows_taz['destination'] = ec_flows_taz['destination'].iloc[0].round(1)
+2022-03-04 11:13:08,075 - INFO (process): Raw evaluating ec_flows_taz_full = ec_flows_taz.groupby(['origin', 'destination'])['count'].sum().sort_values(ascending=False).reset_index(drop=False)
+2022-03-04 11:13:08,087 - INFO (process): Raw evaluating ec_flows_taz = ec_flows_taz.groupby(['origin', 'destination'])['count'].sum().sort_values(ascending=False).reset_index(drop=False).head(20)
+2022-03-04 11:13:08,096 - INFO (process): Raw evaluating ec_flows_city_cpa = ec_flows_city_cpa.sort_values('count', ascending=False).head(10)
+2022-03-04 11:13:08,096 - INFO (process): Raw evaluating mh_flows_taz = mh_flows_taz.sort_values('count', ascending=False)
+2022-03-04 11:13:08,159 - INFO (process): Raw evaluating mh_flows_taz['destination'] = mh_flows_taz['destination'].iloc[0].round(1)
+2022-03-04 11:13:08,169 - INFO (process): Raw evaluating mh_flows_taz_full = mh_flows_taz.groupby(['origin', 'destination'])['count'].sum().sort_values(ascending=False).reset_index(drop=False).round(1)
+2022-03-04 11:13:08,230 - INFO (process): Raw evaluating mh_flows_taz = mh_flows_taz.groupby(['origin', 'destination'])['count'].sum().sort_values(ascending=False).reset_index(drop=False).head(20)
+2022-03-04 11:13:08,312 - INFO (process): Raw evaluating mode_share_by_tele = mode_share_by_tele.pivot(index='telecommuteChoice', columns='tripMode', values='tele_mode_share').reset_index()
+2022-03-04 11:13:08,320 - INFO (process): Raw evaluating tele_choice = tele_choice.set_index('telecommuteChoice')[['num_workers']].T.round(1)
+2022-03-04 11:13:08,320 - INFO (process): Raw evaluating pop_by_race = pop_by_race.set_index('index').reindex(['White', 'Asian', 'Black', 'Two or More', 'Other']).reset_index().round(1)
+2022-03-04 11:13:08,330 - INFO (process): Raw evaluating pop_by_age = pop_by_age.sort_values('index').round(1)
+2022-03-04 11:13:08,332 - INFO (process): Raw evaluating length_by_mode = length_by_mode.set_index('tripMode').reindex(['SOV', 'HOV', 'Transit', 'Truck', 'Non-Motorized', 'Other']).reset_index().round(1)
+2022-03-04 11:13:08,340 - INFO (process): Raw evaluating length_by_mode_ec = length_by_mode_ec.set_index('tripMode').reindex(['SOV', 'HOV', 'Transit', 'Truck', 'Non-Motorized', 'Other']).reset_index().dropna().round(1)
+2022-03-04 11:13:08,352 - INFO (process): Raw evaluating length_by_mode_mh = length_by_mode_mh.set_index('tripMode').reindex(['SOV', 'HOV', 'Transit', 'Truck', 'Non-Motorized', 'Other']).reset_index().dropna().round(1)
+2022-03-04 11:13:08,360 - INFO (process): Raw evaluating vmt_per_capita_by_taz = vmt_per_capita_by_taz.dropna(how='all').fillna(0).round(1)
+2022-03-04 11:13:08,371 - INFO (process): Raw evaluating vmt_per_capita_by_city = vmt_per_capita_by_city.dropna(how='all').fillna(0).round(1)
+2022-03-04 11:13:08,373 - INFO (process): Raw evaluating mode_share = mode_share.set_index('tripMode').reindex(['SOV', 'HOV', 'Transit', 'Truck', 'Non-Motorized', 'Other']).reset_index().round(1)
+2022-03-04 11:13:08,381 - INFO (process): Raw evaluating mode_share_ec = mode_share_ec.set_index('tripMode').reindex(['SOV', 'HOV', 'Transit', 'Truck', 'Non-Motorized', 'Other']).reset_index().dropna().round(1)
+2022-03-04 11:13:08,393 - INFO (process): Raw evaluating mode_share_mh = mode_share_mh.set_index('tripMode').reindex(['SOV', 'HOV', 'Transit', 'Truck', 'Non-Motorized', 'Other']).reset_index().dropna().round(1)
+2022-03-04 11:13:08,393 - INFO (process): Raw evaluating vmt_per_capita_by_tele = vmt_per_capita_by_tele.set_index('telecommuteChoice').reindex(['No telecommute','One Day', 'Two-Three Days', 'Four or More Days', 'Telecommuter Only']).reset_index().round(1)
+2022-03-04 11:13:08,401 - INFO (process): Raw evaluating mode_share_by_tele = mode_share_by_tele.set_index('telecommuteChoice').reindex(['No telecommute', 'One Day', 'Two-Three Days', 'Four or More Days', 'Telecommuter Only']).reset_index()
+2022-03-04 11:13:08,401 - INFO (process): Raw evaluating mode_share_by_tele = mode_share_by_tele[['telecommuteChoice', 'SOV', 'HOV', 'Transit', 'Non-Motorized', 'Other']].round(2)
+2022-03-04 11:13:08,411 - INFO (process): Raw evaluating tele_choice = tele_choice[['One Day', 'Two-Three Days', 'Four or More Days', 'Telecommuter Only']].round(1)
+2022-03-04 11:13:08,413 - INFO (process): Raw evaluating mode_comparison_mh = pd.concat([mode_share.assign(type='Region'), mode_share_ec.assign(type='Employment Center'), mode_share_mh.assign(type='Mobility Hub')], axis=0).pivot(columns='type', values='mode_share', index='tripMode').reset_index()
+2022-03-04 11:13:08,421 - INFO (process): Raw evaluating mode_comparison_mh = mode_comparison_mh.set_index('tripMode').reindex(['SOV', 'HOV', 'Transit', 'Truck', 'Non-Motorized', 'Other']).reset_index().round(1)
+2022-03-04 11:13:08,421 - INFO (process): Raw evaluating vmt_per_capita_by_taz['TAZ'] = vmt_per_capita_by_taz['TAZ'].astype(int).round(1)
+2022-03-04 11:13:08,421 - INFO (process): Raw evaluating trips_by_tod = trips_by_tod.set_index('departTimeFiveTod').reindex(['EA', 'AM', 'MD', 'PM', 'EV']).reset_index().round(1)
+2022-03-04 11:13:08,421 - INFO (process): Raw evaluating ao_dist = ao_dist.round(1)
+2022-03-04 11:13:08,431 - INFO (process): Raw evaluating purpose_share = purpose_share.round(1)
+2022-03-04 11:13:08,434 - INFO (write_results): Writing summary.csv
+2022-03-04 11:13:08,452 - INFO (write_results): Writing pop_by_race.csv
+2022-03-04 11:13:08,467 - INFO (write_results): Writing pop_by_age.csv
+2022-03-04 11:13:08,483 - INFO (write_results): Writing transit_summary.csv
+2022-03-04 11:13:08,499 - INFO (write_results): Writing tele_choice.csv
+2022-03-04 11:13:08,517 - INFO (write_results): Writing mode_share_by_tele.csv
+2022-03-04 11:13:08,531 - INFO (write_results): Writing mode_share.csv
+2022-03-04 11:13:08,552 - INFO (write_results): Writing purpose_share.csv
+2022-03-04 11:13:08,568 - INFO (write_results): Writing ao_dist.csv
+2022-03-04 11:13:08,589 - INFO (write_results): Writing ao_by_mgra.csv
+2022-03-04 11:13:08,730 - INFO (write_results): Writing mgra_od_flows.csv
+2022-03-04 11:13:08,752 - INFO (write_results): Writing taz_od_flows.csv
+2022-03-04 11:13:08,752 - INFO (write_results): Writing trips_by_tod.csv
+2022-03-04 11:13:08,768 - INFO (write_results): Writing length_by_mode.csv
+2022-03-04 11:13:08,784 - INFO (write_results): Writing vmt_per_capita_by_mgra.csv
+2022-03-04 11:13:08,884 - INFO (write_results): Writing vmt_per_capita_by_taz.csv
+2022-03-04 11:13:08,953 - INFO (write_results): Writing vmt_per_capita_by_city.csv
+2022-03-04 11:13:08,953 - INFO (write_results): Writing vmt_per_capita_by_tele.csv
+2022-03-04 11:13:08,969 - INFO (write_results): Writing ec_flows_mgra.csv
+2022-03-04 11:13:08,984 - INFO (write_results): Writing ec_flows_taz.csv
+2022-03-04 11:13:08,984 - INFO (write_results): Writing ec_flows_city.csv
+2022-03-04 11:13:09,000 - INFO (write_results): Writing ec_flows_city_cpa.csv
+2022-03-04 11:13:09,000 - INFO (write_results): Writing summary_ec.csv
+2022-03-04 11:13:09,015 - INFO (write_results): Writing mode_share_ec.csv
+2022-03-04 11:13:09,015 - INFO (write_results): Writing length_by_mode_ec.csv
+2022-03-04 11:13:09,031 - INFO (write_results): Writing summary_mh.csv
+2022-03-04 11:13:09,031 - INFO (write_results): Writing mode_share_mh.csv
+2022-03-04 11:13:09,053 - INFO (write_results): Writing length_by_mode_mh.csv
+2022-03-04 11:13:09,053 - INFO (write_results): Writing mh_flows_taz.csv
+2022-03-04 11:13:09,069 - INFO (write_results): Writing trip_model_summary.csv
+2022-03-04 11:13:09,069 - INFO (write_results): Writing ec_flows_taz_full.csv
+2022-03-04 11:13:09,100 - INFO (write_results): Writing mh_flows_taz_full.csv
+2022-03-04 11:13:09,131 - INFO (write_results): Writing mode_comparison_mh.csv

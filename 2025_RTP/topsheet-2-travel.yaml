@@ -1,0 +1,45 @@
+# Topsheet Test
+title: Overview
+
+# Input files -------------------------
+files:
+  summary:
+    file: "summary.csv"
+  transit_summary:
+    file: "transit_summary.csv"
+
+
+# Calculations ------------------------
+calculations:
+  total_vmt: 'round({summary.total_vmt})'
+  total_vht: 'round({summary.total_vht})'
+  total_vhd: 'round({summary.total_vhd})'
+  boardings: 'round({transit_summary.num_boardings})'
+  vehicle_trips: 'round({summary.num_v_trips})'
+  person_trips: 'round({summary.num_p_trips})'
+  resident_trip_rate: 'round({summary.resident_trip_rate}, 2)'
+
+# Table rows
+outputs:
+  - title: Vehicle Miles Traveled
+    value: total_vmt
+
+  - title: Vehicle Hours Traveled
+    value: total_vht
+
+  - title: Vehicle Hours Delayed
+    value: total_vhd
+
+  - title: Transit Boardings
+    value: boardings
+
+  - title: Vehicle Trips
+    value: vehicle_trips
+    style: {paddingTop: 1em}
+
+  - title: Person Trips
+    value: person_trips
+
+  - title: Resident Trip Rate
+    value: resident_trip_rate
+

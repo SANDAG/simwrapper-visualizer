@@ -1,0 +1,20 @@
+# Topsheet Test
+title: Overview
+
+# Input files -------------------------
+files:
+  summary:
+    file: "summary_ec.csv"
+
+
+# Calculations ------------------------
+calculations:
+  trips: 'round({summary.num_v_trips}, 0)'
+  regional_trip_pct: 'round({summary.percent_total}, 1)'
+
+# Table rows
+outputs:
+  - title: Total Trips
+    value: trips
+  - title: % Regional Work Trips
+    value: regional_trip_pct

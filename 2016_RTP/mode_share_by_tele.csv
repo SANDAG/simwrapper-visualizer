@@ -1,0 +1,6 @@
+telecommuteChoice,SOV,HOV,Transit,Non-Motorized,Other
+No telecommute,0.76,0.14,0.02,0.07,0.0
+One Day,0.76,0.14,0.02,0.07,0.01
+Two-Three Days,0.7,0.18,0.02,0.09,0.01
+Four or More Days,0.71,0.18,0.02,0.09,0.01
+Telecommuter Only,0.63,0.26,0.01,0.09,0.01

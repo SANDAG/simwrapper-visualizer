@@ -1,0 +1,77 @@
+version: 1
+
+header:
+  tab: Employment Center
+  title: Employment Center
+  description: "An overview of Sorrento Valley Employment Center travel as modeled by ABM2+"
+
+layout:
+  topsheetRow:
+    - title: "Overview"
+      type: "topsheet"
+      props:
+        configFile: "topsheet-5-ec.yaml"
+
+  row0:
+    - title: "Employment Center Flow"
+      description: "Trips to Sorrento Valley Employment Center by City/CPA (Top 10 Flows) - Work Purpose Vehicle Trips"
+      type: "flowmap"
+      height: 7
+      props:
+        boundaries: 'cities_cpa_sv_ec.json'
+        boundariesJoinCol: 'Name'
+        boundariesLabels: 'City'
+        dataset: "ec_flows_city_cpa.csv"
+        datasetJoinCol: 'Name'
+        origin: "origin"
+        destination: "destination"
+        flow: "count"
+
+    - title: "Employment Center Flows"
+      description: "Trips to Sorrento Valley Employment Center by TAZ (Top 20 Flows) - Work Purpose Vehicle Trips"
+      type: "flowmap"
+      height: 7
+      props:
+        boundaries: 'taz_chester.geojson'
+        boundariesJoinCol: 'TAZ1454'
+        boundariesLabels: 'TAZ'
+        dataset: "ec_flows_taz.csv"
+        origin: "origin"
+        destination: "destination"
+        flow: "count"
+
+  row1:
+    - title: "Trip Mode Share"
+      description: "Trips to Sorrento Valley Employment Center - Work Purpose Vehicle Trips"
+      type: "bar"
+      props:
+        dataset: "mode_comparison_mh.csv"
+        x: "tripMode"
+        xAxisTitle: "Mode"
+        columns: ['Employment Center', 'Region']
+        yAxisTitle: "% Trips"
+        stacked: false
+  row2:
+    - title: "Trip Time by Mode"
+      description: "Trips to Sorrento Valley Employment Center - Work Purpose Vehicle Trips"
+      type: "bar"
+      width: 2
+      height: 7
+      props:
+        dataset: "length_by_mode_ec.csv"
+        x: "tripMode"
+        xAxisTitle: "Mode"
+        columns: ['time_by_mode']
+        yAxisTitle: "Time (Minutes)"
+
+    - title: "Trip Distance by Mode"
+      description: "Trips to Sorrento Valley Employment Center - Work Purpose Vehicle Trips"
+      type: "bar"
+      width: 2
+      height: 7
+      props:
+        dataset: "length_by_mode_ec.csv"
+        x: "tripMode"
+        xAxisTitle: "Mode"
+        columns: ['dist_by_mode']
+        yAxisTitle: "Distance (Miles)"

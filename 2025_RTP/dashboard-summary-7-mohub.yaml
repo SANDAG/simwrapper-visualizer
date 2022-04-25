@@ -1,0 +1,63 @@
+version: 1
+
+header:
+  tab: Mobility Hub
+  title: Mobility Hub
+  description: "An overview of Urban Core Mobility Hub travel as modeled by ABM2+"
+
+layout:
+  topsheetRow:
+    - title: "Overview"
+      type: "topsheet"
+      props:
+        configFile: "topsheet-6-mohub.yaml"
+
+  row1:
+    - title: "Mobility Hub Flows"
+      description: "Trips to or from Urban Core mobility hub by TAZ (Top 20 Flows) - Vehicle Trips"
+      type: "flowmap"
+      height: 7
+      props:
+        boundaries: 'taz_chester.geojson'
+        boundariesJoinCol: 'TAZ1454'
+        boundariesLabels: 'TAZ'
+        dataset: "mh_flows_taz.csv"
+        origin: "origin"
+        destination: "destination"
+        flow: "count"
+
+  row2:
+    - title: "Trip Mode Share"
+      description: "Trips to or from Urban Core mobility hub - Vehicle Trips"
+      type: "bar"
+      props:
+        dataset: "mode_comparison_mh.csv"
+        x: "tripMode"
+        xAxisTitle: "Mode"
+        columns: ['Mobility Hub', 'Region']
+        yAxisTitle: "% Trips"
+        stacked: false
+  row3:
+    - title: "Trip Time by Mode"
+      description: "Trips to or from Urban Core mobility hub - Vehicle Trips"
+      type: "bar"
+      width: 2
+      height: 7
+      props:
+        dataset: "length_by_mode_mh.csv"
+        x: "tripMode"
+        xAxisTitle: "Mode"
+        columns: ['time_by_mode']
+        yAxisTitle: "Time (Minutes)"
+
+    - title: "Trip Distance by Mode"
+      description: "Trips to or from Urban Core mobility hub - Vehicle Trips"
+      type: "bar"
+      width: 2
+      height: 7
+      props:
+        dataset: "length_by_mode_mh.csv"
+        x: "tripMode"
+        xAxisTitle: "Mode"
+        columns: ['dist_by_mode']
+        yAxisTitle: "Distance (Miles)"

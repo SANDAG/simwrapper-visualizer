@@ -1,0 +1,47 @@
+version: 1
+
+header:
+  tab: Telework
+  title: Telework
+  description: "An overview of SANDAG's ABM2+ teleworkers"
+
+layout:
+  topsheetRow:
+    - title: "Overview"
+      type: "topsheet"
+      props:
+        configFile: "topsheet-4-telework.yaml"
+
+  row0:
+    - title: "Telework Status"
+      description: "Resident Teleworkers Only"
+      type: "pie"
+      width: 1
+      height: 5
+      props:
+        dataset: "tele_choice.csv"
+        useLastRow: true
+
+  row1:
+    - title: "VMT Per Capita by Telework Status"
+      description: "Resident Teleworkers Only - Vehicle Trips"
+      type: "bar"
+      width: 2
+      height: 5
+      props:
+        dataset: "vmt_per_capita_by_tele.csv"
+        x: "telecommuteChoice"
+        columns: ['vmt_per_capita_by_tele']
+        yAxisTitle: "VMT Per Capita"
+
+  row2:
+    - title: "Mode Share by Telework Status"
+      description: "Resident Teleworkers Only - Vehicle Trips"
+      type: "bar"
+      width: 2
+      height: 5
+      props:
+        dataset: "mode_share_by_tele.csv"
+        x: "telecommuteChoice"
+        stacked: True
+        yAxisTitle: "Mode Share"

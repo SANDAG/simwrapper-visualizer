@@ -1,0 +1,21 @@
+# Topsheet Test
+title: Overview
+
+# Input files -------------------------
+files:
+  summary:
+    file: "summary.csv"
+
+
+# Calculations ------------------------
+calculations:
+  workers: '{summary.num_workers}'
+  teleworkers: '{summary.num_teleworkers}'
+
+# Table rows
+outputs:
+  - title: Workers
+    value: workers
+
+  - title: Teleworkers
+    value: teleworkers

@@ -1,0 +1,35 @@
+# Topsheet Test
+title: Overview
+
+# Input files -------------------------
+files:
+  summary:
+    file: "summary.csv"
+
+
+# Calculations ------------------------
+calculations:
+  households: '{summary.num_hhs}'
+  persons: '{summary.num_persons}'
+  workers: '{summary.num_workers}'
+  hh_income: 'round({summary.hh_income}, 0)'
+  hh_size: 'round({summary.hh_size}, 1)'
+  auto_ownership: 'round({summary.auto_ownership}, 1)'
+
+# Table rows
+outputs:
+  - title: Residents
+    value: persons
+
+  - title: Households
+    value: households
+
+  - title: Household Income (Average)
+    value: hh_income
+    style: {paddingTop: 1em}
+
+  - title: Household Size (Average)
+    value: hh_size
+
+  - title: Household Auto Ownership (Average)
+    value: auto_ownership

@@ -1,0 +1,46 @@
+MODE,ACCESSMODE,TOD,num_boardings
+Local Bus,Kiss and Ride to Transit,AM,1339.529652
+Local Bus,Kiss and Ride to Transit,EA,120.142853
+Local Bus,Kiss and Ride to Transit,EV,1292.226696
+Local Bus,Kiss and Ride to Transit,MD,2454.701293
+Local Bus,Kiss and Ride to Transit,PM,1893.68368
+Local Bus,Park and Ride to Transit,AM,613.251546
+Local Bus,Park and Ride to Transit,EA,73.425192
+Local Bus,Park and Ride to Transit,EV,388.074799
+Local Bus,Park and Ride to Transit,MD,833.329045
+Local Bus,Park and Ride to Transit,PM,719.929979
+Local Bus,Walk to Transit,AM,36645.672336
+Local Bus,Walk to Transit,EA,5824.594794
+Local Bus,Walk to Transit,EV,34612.659165
+Local Bus,Walk to Transit,MD,77921.397114
+Local Bus,Walk to Transit,PM,63858.376802
+Local Bus and Premium Transit,Kiss and Ride to Transit,AM,4213.374744
+Local Bus and Premium Transit,Kiss and Ride to Transit,EA,821.058307
+Local Bus and Premium Transit,Kiss and Ride to Transit,EV,3002.862309
+Local Bus and Premium Transit,Kiss and Ride to Transit,MD,5652.936325
+Local Bus and Premium Transit,Kiss and Ride to Transit,PM,6422.658423
+Local Bus and Premium Transit,Park and Ride to Transit,AM,2359.695031
+Local Bus and Premium Transit,Park and Ride to Transit,EA,476.7319
+Local Bus and Premium Transit,Park and Ride to Transit,EV,1075.614229
+Local Bus and Premium Transit,Park and Ride to Transit,MD,2193.008927
+Local Bus and Premium Transit,Park and Ride to Transit,PM,2982.606895
+Local Bus and Premium Transit,Walk to Transit,AM,92423.651571
+Local Bus and Premium Transit,Walk to Transit,EA,23319.347978
+Local Bus and Premium Transit,Walk to Transit,EV,59459.180264
+Local Bus and Premium Transit,Walk to Transit,MD,131223.592956
+Local Bus and Premium Transit,Walk to Transit,PM,126189.052907
+Premium Transit,Kiss and Ride to Transit,AM,24313.385605
+Premium Transit,Kiss and Ride to Transit,EA,5624.031993
+Premium Transit,Kiss and Ride to Transit,EV,15217.522852
+Premium Transit,Kiss and Ride to Transit,MD,33127.229578
+Premium Transit,Kiss and Ride to Transit,PM,29880.142166
+Premium Transit,Park and Ride to Transit,AM,12307.554259
+Premium Transit,Park and Ride to Transit,EA,2638.192841
+Premium Transit,Park and Ride to Transit,EV,4795.426579
+Premium Transit,Park and Ride to Transit,MD,12601.769889
+Premium Transit,Park and Ride to Transit,PM,13405.944626
+Premium Transit,Walk to Transit,AM,107193.146408
+Premium Transit,Walk to Transit,EA,27232.934444
+Premium Transit,Walk to Transit,EV,99157.672826
+Premium Transit,Walk to Transit,MD,199491.892471
+Premium Transit,Walk to Transit,PM,163569.661877
