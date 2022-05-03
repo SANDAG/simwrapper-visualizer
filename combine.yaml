@@ -1,0 +1,84 @@
+runs:
+  2016: C:\dev\simwrapper-visualizer\2016_RTP
+  2025: C:\dev\simwrapper-visualizer\2025_RTP
+  2035: C:\dev\simwrapper-visualizer\2035_RTP
+  2050: C:\dev\simwrapper-visualizer\2050_RTP
+
+outpath: C:\dev\simwrapper-visualizer\data
+
+tables:
+  ao_by_mgra:
+    merge:
+      - homeMGRA
+  #ao_dist
+  ec_flows_city:
+    merge:
+      - origin
+      - destination
+  ec_flows_city_cpa:
+    merge:
+      - origin
+      - destination
+  ec_flows_mgra:
+    merge:
+      - origin
+      - destination
+  ec_flows_taz:
+    merge:
+      - origin
+      - destination
+  ec_flows_taz_full:
+    merge:
+      - origin
+      - destination
+  #length_by_mode
+  #length_by_mode_ec
+  #length_by_mode_mh
+  mgra_od_flows:
+    merge:
+      - origin
+      - destination
+  mh_flows_taz:
+    merge:
+      - origin
+      - destination
+  mh_flows_taz_full:
+    merge:
+      - origin
+      - destination
+  #mode_comparison_mh
+  mode_share:
+    merge:
+      - tripMode
+  #mode_share_by_tele
+  mode_share_ec:
+    merge:
+      - tripMode
+  mode_share_mh:
+    merge:
+      - tripMode
+  #pop_by_age:
+  #pop_by_race
+  #purpose_share
+  #summary
+  #summary_ec
+  #summary_mh
+  transit_summary:
+    merge:
+      - MODE
+      - ACCESSMODE
+      - TOD
+  #trip_model_summary
+  #trips_by_tod
+  vmt_per_capita_by_city:
+    merge:
+      - homeCity
+  vmt_per_capita_by_mgra:
+    merge:
+      - homeMGRA
+  vmt_per_capita_by_taz:
+    merge:
+      - TAZ
+  vmt_per_capita_by_tele:
+    merge:
+      - telecommuteChoice
