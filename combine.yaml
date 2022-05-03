@@ -10,7 +10,11 @@ tables:
   ao_by_mgra:
     merge:
       - homeMGRA
-  #ao_dist
+  ao_dist:
+    merge:
+      - index
+    skip:
+      - ao_counts
   ec_flows_city:
     merge:
       - origin

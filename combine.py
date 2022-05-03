@@ -23,7 +23,12 @@ for table in config['tables']:
             pass
 
         for col in in_df.columns:
-            if col in merge_cols:
+            #Remove columns to be skipped
+            if 'skip' in config['tables'][table] and col in config['tables'][table]['skip']:
+                del in_df[col]
+                continue
+
+            elif col in merge_cols:
                 in_df[col] = in_df[col].apply(lambda x: str(x).replace('.0', '')) #Convert to string in case different data types
             else:
                 name_map[col] = run# + '_' + col
