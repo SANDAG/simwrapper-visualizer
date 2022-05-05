@@ -1,0 +1,12 @@
+version: 1
+
+header:
+  tab: Intro
+  title: SANDAG ABM2+ Dashboard
+  description: "An Introduction"
+
+layout:
+  row:
+    type: text
+    props:
+      file: "README.md"

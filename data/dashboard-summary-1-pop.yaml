@@ -1,0 +1,51 @@
+version: 1
+
+header:
+  tab: Population
+  title: Population
+  description: "A high-level overview of SANDAG's ABM2+ synthetic population"
+
+layout:
+  topsheetRow:
+    - title: "Overview"
+      type: "topsheet"
+      props:
+        configFile: "topsheet-1-pop.yaml"
+
+  row1:
+    - title: "Race"
+      description: Residents by Race Group - All Residents
+      type: "bar"
+      width: 1
+      height: 5
+      props:
+        dataset: "pop_by_race.csv"
+        x: "index"
+        xAxisTitle: "Race"
+        columns: ['2016', '2025', '2035', '2050']
+        yAxisTitle: "% Residents"
+
+    - title: "Age"
+      description: Residents by Age Group - All Residents
+      type: "bar"
+      width: 1
+      height: 5
+      props:
+        dataset: "pop_by_age.csv"
+        x: "index"
+        xAxisTitle: "Age"
+        columns: ['2016', '2025', '2035', '2050']
+        yAxisTitle: "% Residents"
+
+  row3:
+    - title: "Auto Ownership"
+      description: Household Auto Ownership - All Households
+      type: "bar"
+      width: 1
+      height: 5
+      props:
+        dataset: "ao_dist.csv"
+        x: "index"
+        xAxisTitle: "Autos"
+        columns: ['2016', '2025', '2035', '2050']
+        yAxisTitle: "% Households"
