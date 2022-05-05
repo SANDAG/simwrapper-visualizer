@@ -61,9 +61,21 @@ tables:
   mode_share_mh:
     merge:
       - tripMode
-  #pop_by_age:
-  #pop_by_race
-  #purpose_share
+  pop_by_age:
+    merge:
+      - index
+    skip:
+      - age_count
+  pop_by_race:
+    merge:
+      - index
+    skip:
+      - race_count
+  purpose_share:
+    merge:
+      - tripPurposeDestination
+    skip:
+      - purpose_counts
   #summary
   #summary_ec
   #summary_mh
@@ -73,7 +85,11 @@ tables:
       - ACCESSMODE
       - TOD
   #trip_model_summary
-  #trips_by_tod
+  trips_by_tod:
+    merge:
+      - departTimeFiveTod
+    skip:
+      - trips_by_tod
   vmt_per_capita_by_city:
     merge:
       - homeCity
