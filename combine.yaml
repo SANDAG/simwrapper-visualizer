@@ -41,8 +41,20 @@ tables:
     separate:
       - dist_by_mode
       - time_by_mode
-  #length_by_mode_ec
-  #length_by_mode_mh
+  length_by_mode_ec:
+    merge:
+      - tripMode
+    separate:
+      - dist_by_mode
+      - time_by_mode
+    suffix: ec
+  length_by_mode_mh:
+    merge:
+      - tripMode
+    separate:
+      - dist_by_mode
+      - time_by_mode
+    suffix: mh
   mgra_od_flows:
     merge:
       - origin
@@ -55,7 +67,14 @@ tables:
     merge:
       - origin
       - destination
-  #mode_comparison_mh
+  mode_comparison_mh:
+    merge:
+      - tripMode
+    separate:
+      - Employment Center
+      - Mobility Hub
+      - Region
+    suffix: ModeShare
   mode_share:
     merge:
       - tripMode

@@ -73,7 +73,11 @@ for table in config['tables']:
                 elif '_{}'.format(i) in col:
                     out_dfs[names[i]][col.split('_')[0]] = out_df[col]
 
-            out_dfs[names[i]].to_csv(config['outpath'] + '\\' + names[i] + '.csv', index = False)
+            outfile = config['outpath'] + '\\' + names[i].replace(' ', '') + '.csv'
+            if 'suffix' in config['tables'][table]:
+                outfile = outfile.replace('.csv', '_{}.csv'.format(config['tables'][table]['suffix']))
+
+            out_dfs[names[i]].to_csv(outfile, index = False)
 
         del in_df, out_df, out_dfs
 
