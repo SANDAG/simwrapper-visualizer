@@ -35,7 +35,12 @@ tables:
     merge:
       - origin
       - destination
-  #length_by_mode
+  length_by_mode:
+    merge:
+      - tripMode
+    separate:
+      - dist_by_mode
+      - time_by_mode
   #length_by_mode_ec
   #length_by_mode_mh
   mgra_od_flows:

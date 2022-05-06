@@ -15,6 +15,8 @@ for table in config['tables']:
     for run in config['runs']:
         in_df = pd.read_csv(config['runs'][run] + '\\' + table + '.csv')
         name_map = {}
+        names = []
+        counter = 0 #For separating columns into different tables
 
         try:
             for col in config['tables'][table]['dtype']:
@@ -27,9 +29,12 @@ for table in config['tables']:
             if 'skip' in config['tables'][table] and col in config['tables'][table]['skip']:
                 del in_df[col]
                 continue
-
             elif col in merge_cols:
                 in_df[col] = in_df[col].apply(lambda x: str(x).replace('.0', '')) #Convert to string in case different data types
+            elif 'separate' in config['tables'][table] and col in config['tables'][table]['separate']:
+                name_map[col] = '{0}_{1}'.format(run, counter)
+                names.append(col)
+                counter += 1
             else:
                 name_map[col] = run# + '_' + col
 
@@ -58,6 +63,21 @@ for table in config['tables']:
         for col in config['tables'][table]['pct_diff']:
             out_df['%Diff_' + col] = out_df[config['tables'][table]['pct_diff'][col][0] + '_' + col] / out_df[config['tables'][table]['pct_diff'][col][1] + '_' + col] - 1
 
-    out_df.index.name = 'index'
-    out_df.fillna(0).to_csv(config['outpath'] + '\\' + table + '.csv', index = False)
-    del in_df, out_df
+    if 'separate' in config['tables'][table]:
+        out_dfs = {}
+        for i in range(counter):
+            out_dfs[names[i]] = pd.DataFrame()
+            for col in out_df.columns:
+                if col in merge_cols:
+                    out_dfs[names[i]][col] = out_df[col]
+                elif '_{}'.format(i) in col:
+                    out_dfs[names[i]][col.split('_')[0]] = out_df[col]
+
+            out_dfs[names[i]].to_csv(config['outpath'] + '\\' + names[i] + '.csv', index = False)
+
+        del in_df, out_df, out_dfs
+
+    else:
+        out_df.index.name = 'index'
+        out_df.fillna(0).to_csv(config['outpath'] + '\\' + table + '.csv', index = False)
+        del in_df, out_df
