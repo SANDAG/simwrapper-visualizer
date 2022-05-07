@@ -104,8 +104,14 @@ tables:
     transpose: stat
     merge:
       - stat
-  #summary_ec
-  #summary_mh
+  summary_ec:
+    transpose: stat
+    merge:
+      - stat
+  summary_mh:
+    transpose: stat
+    merge:
+      - stat
   transit_summary:
     merge:
       - MODE
