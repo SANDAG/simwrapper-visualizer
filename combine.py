@@ -14,6 +14,12 @@ for table in config['tables']:
 
     for run in config['runs']:
         in_df = pd.read_csv(config['runs'][run] + '\\' + table + '.csv')
+
+        if 'transpose' in config['tables'][table]:
+            in_df = in_df.T
+            in_df.index.name = config['tables'][table]['transpose']
+            in_df = in_df.reset_index()
+
         name_map = {}
         names = []
         counter = 0 #For separating columns into different tables
@@ -85,3 +91,5 @@ for table in config['tables']:
         out_df.index.name = 'index'
         out_df.fillna(0).to_csv(config['outpath'] + '\\' + table + '.csv', index = False)
         del in_df, out_df
+
+print('Done')
