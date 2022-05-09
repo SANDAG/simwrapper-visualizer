@@ -6,11 +6,42 @@ header:
   description: "A high-level overview of SANDAG's ABM2+ synthetic population"
 
 layout:
-  topsheetRow:
-    - title: "Overview"
-      type: "topsheet"
+  #topsheetRow:
+  #  - title: "Overview"
+  #    type: "topsheet"
+  #    props:
+  #      configFile: "topsheet-1-pop.yaml"
+  row0:
+    - title: "Population"
+      type: "bar"
+      width: 1
+      height: 5
       props:
-        configFile: "topsheet-1-pop.yaml"
+        dataset: "summary_population.csv"
+        x: "stat"
+        #xAxisTitle: "Statistic"
+        columns: ['2016', '2025', '2035', '2050']
+        yAxisTitle: Value
+    - title: "Household Income"
+      type: "bar"
+      width: 1
+      height: 5
+      props:
+        dataset: "summary_income.csv"
+        x: "stat"
+        columns: ['2016', '2025', '2035', '2050']
+        yAxisTitle: Household Income (2016 US$)
+
+  rowOneHalf:
+    - title: "Household Size and Auto Ownership"
+      type: "bar"
+      width: 1
+      height: 5
+      props:
+        dataset: "summary_hhsizeveh.csv"
+        x: "stat"
+        columns: ['2016', '2025', '2035', '2050']
+        yAxisTitle: Value
 
   row1:
     - title: "Race"
