@@ -1,0 +1,42 @@
+version: 1
+
+header:
+  tab: Travel
+  title: Travel Overview
+  description: "A high-level overview of SANDAG's ABM2+ travel results"
+
+layout:
+
+  topsheetRow:
+    - title: "Overview"
+      type: "topsheet"
+      props:
+        configFile: "topsheet-2-travel.yaml"
+
+  row0:
+    - title: "VMT Per Capita"
+      description: Vehicle Miles Traveled Per Capita by Jurisdiction - All Trips
+      type: "map"
+      height: 7
+      props:
+        boundaries: 'cities.geojson'
+        boundariesJoinCol: 'Name'
+        boundariesLabels: 'City'
+        dataset: "vmt_per_capita_by_city.csv"
+        datasetJoinCol: "homeCity"
+        datasetValue: '2016'
+        exponentColors: false
+
+  row1:
+    - title: "VMT Per Capita"
+      description: Vehicle Miles Traveled Per Capita by Traffic Analysis Zone (TAZ) - All Trips
+      type: "map"
+      height: 7
+      props:
+        boundaries: 'taz_chester.geojson'
+        boundariesJoinCol: 'TAZ1454'
+        boundariesLabels: 'TAZ'
+        dataset: "vmt_per_capita_by_taz.csv"
+        datasetJoinCol: "TAZ"
+        datasetValue: '2016'
+        exponentColors: false
