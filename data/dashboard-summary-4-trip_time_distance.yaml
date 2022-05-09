@@ -1,0 +1,33 @@
+version: 1
+
+header:
+  tab: Trip Length
+  title: Trip Length
+  description: "An overview of SANDAG's ABM2+ trip times and distances"
+
+layout:
+  row0:
+    - title: "Trip Time by Mode"
+      description: "All Vehicle Trips"
+      type: "bar"
+      width: 2
+      height: 6
+      props:
+        dataset: "time_by_mode.csv"
+        x: "tripMode"
+        xAxisTitle: "Mode"
+        columns: ['2016', '2025', '2035', '2050']
+        yAxisTitle: "Time (Minutes)"
+
+  row1:
+    - title: "Trip Distance by Mode"
+      description: "All Vehicle Trips"
+      type: "bar"
+      width: 2
+      height: 6
+      props:
+        dataset: "dist_by_mode.csv"
+        x: "tripMode"
+        xAxisTitle: "Mode"
+        columns: ['2016', '2025', '2035', '2050']
+        yAxisTitle: "Distance (Miles)"

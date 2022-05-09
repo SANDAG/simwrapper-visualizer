@@ -1,0 +1,45 @@
+version: 1
+
+header:
+  tab: Trip Share
+  title: Trip Share
+  description: "An overview of SANDAG's ABM2+ trip shares"
+
+layout:
+
+  row0:
+    - title: "Trip Mode Share"
+      description: "All Vehicle Trips"
+      type: "bar"
+      height: 5
+      props:
+        dataset: "mode_share.csv"
+        x: "tripMode"
+        xAxisTitle: "Mode"
+        columns: ['2016', '2025', '2035', '2050']
+        yAxisTitle: "% Trips"
+
+  row2:
+    - title: "Trip Purpose Share"
+      description: "All Vehicle Trips"
+      type: "bar"
+      height: 5
+      props:
+        dataset: "purpose_share.csv"
+        x: "tripPurposeDestination"
+        xAxisTitle: "Purpose"
+        columns: ['2016', '2025', '2035', '2050']
+        yAxisTitle: "% Trips"
+
+  row3:
+    - title: "Trip Time of Day Share"
+      description: "All Vehicle Trips"
+      type: "bar"
+      width: 1
+      height: 5
+      props:
+        dataset: "trips_by_tod.csv"
+        x: "departTimeFiveTod"
+        xAxisTitle: "Depart Time"
+        columns: ['2016', '2025', '2035', '2050']
+        yAxisTitle: "% Trips"
