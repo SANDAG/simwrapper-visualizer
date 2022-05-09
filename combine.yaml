@@ -100,10 +100,31 @@ tables:
       - tripPurposeDestination
     skip:
       - purpose_counts
+
   summary:
     transpose: stat
     merge:
       - stat
+    subsets:
+      summary_population:
+        query: 'stat in ["num_hhs", "num_persons", "num_workers"]'
+        rename:
+          stat:
+            num_hhs: Households
+            num_persons: People
+            num_workers: Workers
+      summary_income:
+        query: 'stat in ["hh_income"]'
+        rename:
+          stat:
+            hh_income: "Household Income"
+      summary_hhsizeveh:
+        query: 'stat in ["hh_size", "auto_ownership"]'
+        rename:
+          stat:
+            hh_size: "Household Size"
+            auto_ownership: "Household Vehciles"
+
   summary_ec:
     transpose: stat
     merge:
