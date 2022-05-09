@@ -87,6 +87,14 @@ for table in config['tables']:
 
         del in_df, out_df, out_dfs
 
+    elif 'subsets' in config['tables'][table]:
+        for subset in config['tables'][table]['subsets']:
+            subset_df = out_df.query(config['tables'][table]['subsets'][subset]['query'])
+            if 'rename' in config['tables'][table]['subsets'][subset]:
+                for col in config['tables'][table]['subsets'][subset]['rename']:
+                    subset_df[col] = subset_df[col].replace(config['tables'][table]['subsets'][subset]['rename'][col])
+            subset_df.to_csv(config['outpath'] + '\\' + subset + '.csv', index = False)
+
     else:
         out_df.index.name = 'index'
         out_df.fillna(0).to_csv(config['outpath'] + '\\' + table + '.csv', index = False)
