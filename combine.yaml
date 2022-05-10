@@ -124,6 +124,13 @@ tables:
           stat:
             hh_size: "Household Size"
             auto_ownership: "Household Vehciles"
+      summary_vmtvht:
+        query: 'stat in ["total_vmt", "total_vht", "total_vhd"]'
+        rename:
+          stat:
+            total_vmt: "Vehicle Miles Traveled"
+            total_vht: "Vehicle Hours Traveled"
+            total_vhd: "Vehicle Hours Delayed"
 
   summary_ec:
     transpose: stat
