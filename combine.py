@@ -93,7 +93,12 @@ for table in config['tables']:
             if 'rename' in config['tables'][table]['subsets'][subset]:
                 for col in config['tables'][table]['subsets'][subset]['rename']:
                     subset_df[col] = subset_df[col].replace(config['tables'][table]['subsets'][subset]['rename'][col])
-            subset_df.to_csv(base_path + config['outpath'] + '\\' + subset + '.csv', index = False)
+            if 'transpose' in config['tables'][table]['subsets'][subset]:
+                subset_df = subset_df.set_index(subset_df.columns[0]).T
+                subset_df.index.name = config['tables'][table]['subsets'][subset]['transpose']
+                subset_df.to_csv(base_path + config['outpath'] + '\\' + subset + '.csv')
+            else:
+                subset_df.to_csv(base_path + config['outpath'] + '\\' + subset + '.csv', index = False)
 
     else:
         out_df.index.name = 'index'
