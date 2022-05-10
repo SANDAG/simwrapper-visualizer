@@ -1,10 +1,10 @@
 runs:
-  2016: C:\dev\simwrapper-visualizer\2016_RTP
-  2025: C:\dev\simwrapper-visualizer\2025_RTP
-  2035: C:\dev\simwrapper-visualizer\2035_RTP
-  2050: C:\dev\simwrapper-visualizer\2050_RTP
+  2016: \\2016_RTP
+  2025: \\2025_RTP
+  2035: \\2035_RTP
+  2050: \\2050_RTP
 
-outpath: C:\dev\simwrapper-visualizer\data
+outpath: \\data
 
 tables:
   ao_by_mgra:

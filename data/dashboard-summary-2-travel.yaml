@@ -7,11 +7,22 @@ header:
 
 layout:
 
-  topsheetRow:
-    - title: "Overview"
-      type: "topsheet"
+  #topsheetRow:
+  #  - title: "Overview"
+  #    type: "topsheet"
+  #    props:
+  #      configFile: "topsheet-2-travel.yaml"
+  rowNegative1:
+    - title: "VMT/VHT"
+      description: Vehicle Miles Traveled, Vehicle Hours Traveled, and Vehicle Hours Delayed for different years
+      type: "bar"
+      height: 5
+      width: 1
       props:
-        configFile: "topsheet-2-travel.yaml"
+        dataset: "summary_vmtvht.csv"
+        x: "stat"
+        columns: ['2016', '2025', '2035', '2050']
+        yAxisTitle: Value
 
   row0:
     - title: "VMT Per Capita"

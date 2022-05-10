@@ -13,7 +13,7 @@ for table in config['tables']:
     merge_cols = config['tables'][table]['merge']
 
     for run in config['runs']:
-        in_df = pd.read_csv(config['runs'][run] + '\\' + table + '.csv')
+        in_df = pd.read_csv(base_path + config['runs'][run] + '\\' + table + '.csv')
 
         if 'transpose' in config['tables'][table]:
             in_df = in_df.T
@@ -79,7 +79,7 @@ for table in config['tables']:
                 elif '_{}'.format(i) in col:
                     out_dfs[names[i]][col.split('_')[0]] = out_df[col]
 
-            outfile = config['outpath'] + '\\' + names[i].replace(' ', '') + '.csv'
+            outfile = base_path + config['outpath'] + '\\' + names[i].replace(' ', '') + '.csv'
             if 'suffix' in config['tables'][table]:
                 outfile = outfile.replace('.csv', '_{}.csv'.format(config['tables'][table]['suffix']))
 
@@ -93,11 +93,11 @@ for table in config['tables']:
             if 'rename' in config['tables'][table]['subsets'][subset]:
                 for col in config['tables'][table]['subsets'][subset]['rename']:
                     subset_df[col] = subset_df[col].replace(config['tables'][table]['subsets'][subset]['rename'][col])
-            subset_df.to_csv(config['outpath'] + '\\' + subset + '.csv', index = False)
+            subset_df.to_csv(base_path + config['outpath'] + '\\' + subset + '.csv', index = False)
 
     else:
         out_df.index.name = 'index'
-        out_df.fillna(0).to_csv(config['outpath'] + '\\' + table + '.csv', index = False)
+        out_df.fillna(0).to_csv(base_path + config['outpath'] + '\\' + table + '.csv', index = False)
         del in_df, out_df
 
 print('Done')
