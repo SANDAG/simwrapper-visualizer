@@ -8,9 +8,12 @@ header:
 layout:
   topsheetRow:
     - title: "Overview"
-      type: "topsheet"
+      type: "line"
       props:
-        configFile: "topsheet-4-telework.yaml"
+        dataset: "summary_telework.csv"
+        x: "Year"
+        columns: ["Workers", "Teleworkers"]
+        yAxisTitle: Number of Workers
 
   row0:
     - title: "Telework Status"

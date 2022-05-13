@@ -147,6 +147,13 @@ tables:
             resident_trip_rate: "Residents"
             worker_trip_rate: "Workers"
         transpose: Year
+      summary_telework:
+        query: 'stat in ["num_workers", "num_teleworkers"]'
+        rename:
+          stat:
+            num_workers: "Workers"
+            num_teleworkers: "Teleworkers"
+        transpose: Year
 
   summary_ec:
     transpose: stat
