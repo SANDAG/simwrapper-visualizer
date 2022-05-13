@@ -61,9 +61,8 @@ for table in config['tables']:
         #Merge tables from different runs together. If no table exists yet copy `in_df`
         try:
             out_df = out_df.merge(in_df.rename(columns = name_map), how = 'outer', on = merge_cols)
-        except NameError:
+        except:
             out_df = in_df.rename(columns = name_map)
-            
 
     if 'pct_diff' in config['tables'][table]:
         for col in config['tables'][table]['pct_diff']:
@@ -93,6 +92,9 @@ for table in config['tables']:
             if 'rename' in config['tables'][table]['subsets'][subset]:
                 for col in config['tables'][table]['subsets'][subset]['rename']:
                     subset_df[col] = subset_df[col].replace(config['tables'][table]['subsets'][subset]['rename'][col])
+            if 'exclude' in config['tables'][table]['subsets'][subset]:
+                for col in config['tables'][table]['subsets'][subset]['exclude']:
+                    del subset_df[col]
             if 'transpose' in config['tables'][table]['subsets'][subset]:
                 subset_df = subset_df.set_index(subset_df.columns[0]).T
                 subset_df.index.name = config['tables'][table]['subsets'][subset]['transpose']

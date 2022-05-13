@@ -123,14 +123,7 @@ tables:
         rename:
           stat:
             hh_size: "Household Size"
-            auto_ownership: "Household Vehciles"
-      #summary_vmt:
-      #  query: 'stat in ["total_vmt", "total_vht", "total_vhd"]'
-      #  rename:
-      #    stat:
-      #      total_vmt: "Vehicle Miles Traveled"
-      #      total_vht: "Vehicle Hours Traveled"
-      #      total_vhd: "Vehicle Hours Delayed"
+            auto_ownership: "Household Vehicles"
       summary_vmt:
         query: 'stat == "total_vmt"'
         transpose: Year
@@ -140,7 +133,20 @@ tables:
       summary_vhd:
         query: 'stat == "total_vhd"'
         transpose: Year
-
+      summary_numtrips:
+        query: 'stat in ["num_v_trips", "num_p_trips"]'
+        rename:
+          stat:
+            num_v_trips: "Vehicle Trips"
+            num_p_trips: "Person Trips"
+        transpose: Year
+      summary_trip_rate:
+        query: 'stat in ["resident_trip_rate", "worker_trip_rate"]'
+        rename:
+          stat:
+            resident_trip_rate: "Residents"
+            worker_trip_rate: "Workers"
+        transpose: Year
 
   summary_ec:
     transpose: stat
@@ -155,6 +161,17 @@ tables:
       - MODE
       - ACCESSMODE
       - TOD
+    total:
+      MODE: Boardings
+      ACCESSMODE: Boardings
+      TOD: Boardings
+    subsets:
+      transit_boardings_by_year:
+        query: 'MODE == "Boardings" and ACCESSMODE == "Boardings" and TOD == "Boardings"'
+        exclude:
+          - ACCESSMODE
+          - TOD
+        transpose: Year
   #trip_model_summary
   trips_by_tod:
     merge:

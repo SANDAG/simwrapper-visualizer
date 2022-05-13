@@ -13,16 +13,71 @@ layout:
   #    props:
   #      configFile: "topsheet-2-travel.yaml"
   rowNegative1:
-    - title: "VMT/VHT"
-      description: Vehicle Miles Traveled, Vehicle Hours Traveled, and Vehicle Hours Delayed for different years
-      type: "bar"
+    - title: "VMT"
+      description: Vehicle Miles Traveled for different years
+      type: "line"
       height: 5
       width: 1
       props:
-        dataset: "summary_vmtvht.csv"
-        x: "stat"
-        columns: ['2016', '2025', '2035', '2050']
-        yAxisTitle: Value
+        dataset: "summary_vmt.csv"
+        x: "Year"
+        columns: ["total_vmt"]
+        yAxisTitle: Vehicle Miles Traveled
+
+    - title: "VHT"
+      description: Vehicle Hours Traveled for different years
+      type: "line"
+      height: 5
+      width: 1
+      props:
+        dataset: "summary_vht.csv"
+        x: "Year"
+        columns: ["total_vht"]
+        yAxisTitle: Vehicle Hours Traveled
+
+  rowNegativeOneHalf:
+    - title: "VHD"
+      description: Vehicle Hours Delayed for different years
+      type: "line"
+      height: 5
+      width: 1
+      props:
+        dataset: "summary_vhd.csv"
+        x: "Year"
+        columns: ["total_vhd"]
+        yAxisTitle: Vehicle Hours Delayed
+    - title: "Transit Boardings"
+      description: Total transit boardings for different years
+      type: "line"
+      height: 5
+      width: 1
+      props:
+        dataset: "transit_boardings_by_year.csv"
+        x: "Year"
+        columns: ["Boardings"]
+        yAxisTitle: Total Boardings by Year
+    
+  rowNegativeOneQuarter:
+    - title: "Number of Trips"
+      description: Number of Person and Vehicle Trips for different years
+      type: "line"
+      height: 5
+      width: 1
+      props:
+        dataset: "summary_numtrips.csv"
+        x: "Year"
+        columns: ["Person Trips", "Vehicle Trips"]
+        yAxisTitle: Number of Trips
+    - title: "Person Trip Rate"
+      description: Person Trip Rate for different years
+      type: "line"
+      height: 5
+      width: 1
+      props:
+        dataset: "summary_trip_rate.csv"
+        x: "Year"
+        columns: ["Residents", "Workers"]
+        yAxisTitle: Trips per Person
 
   row0:
     - title: "VMT Per Capita"
