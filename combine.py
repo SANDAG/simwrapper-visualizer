@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import os
 import yaml
+import pdb
 
 base_path = os.path.dirname(os.path.realpath(__file__))
 config_file = base_path + r'\combine.yaml'
@@ -19,6 +20,9 @@ for table in config['tables']:
             in_df = in_df.T
             in_df.index.name = config['tables'][table]['transpose']
             in_df = in_df.reset_index()
+
+        #if table == 'summary_ec':
+        #    pdb.set_trace()
 
         name_map = {}
         names = []
@@ -44,6 +48,9 @@ for table in config['tables']:
             else:
                 name_map[col] = run# + '_' + col
 
+            #if table == 'summary_ec':
+            #    pdb.set_trace()
+
         #Add marginal totals if needed
         if 'total' in config['tables'][table]:
             for col in config['tables'][table]['total']:
@@ -58,11 +65,20 @@ for table in config['tables']:
                     totals[col] = config['tables'][table]['total'][col]
                     in_df = pd.concat((in_df.reset_index(), totals))
 
+        #if table == 'summary_ec':
+        #    pdb.set_trace()
+
         #Merge tables from different runs together. If no table exists yet copy `in_df`
         try:
-            out_df = out_df.merge(in_df.rename(columns = name_map), how = 'outer', on = merge_cols)
-        except:
+            if in_df.shape[0] == out_df.shape[0]:
+                out_df = out_df.merge(in_df.rename(columns = name_map), how = 'outer', on = merge_cols)
+            else:
+                raise NameError
+        except NameError:
             out_df = in_df.rename(columns = name_map)
+
+        #if table == 'summary_ec':
+        #    pdb.set_trace()
 
     if 'pct_diff' in config['tables'][table]:
         for col in config['tables'][table]['pct_diff']:
