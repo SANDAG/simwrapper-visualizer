@@ -1,0 +1,26 @@
+telecommuteChoice,Mode,2016,2025,2035,2050
+No telecommute,SOV,0.76,0.7,0.65,0.61
+One Day,SOV,0.76,0.72,0.67,0.64
+Two-Three Days,SOV,0.7,0.65,0.6,0.57
+Four or More Days,SOV,0.71,0.65,0.6,0.57
+Telecommuter Only,SOV,0.63,0.6,0.57,0.54
+No telecommute,HOV,0.14,0.15,0.14,0.14
+One Day,HOV,0.14,0.15,0.14,0.15
+Two-Three Days,HOV,0.18,0.19,0.18,0.17
+Four or More Days,HOV,0.18,0.19,0.18,0.18
+Telecommuter Only,HOV,0.26,0.26,0.25,0.25
+No telecommute,Transit,0.02,0.04,0.08,0.09
+One Day,Transit,0.02,0.03,0.07,0.08
+Two-Three Days,Transit,0.02,0.04,0.07,0.08
+Four or More Days,Transit,0.02,0.03,0.07,0.07
+Telecommuter Only,Transit,0.01,0.02,0.03,0.04
+No telecommute,Non-Motorized,0.07,0.1,0.12,0.14
+One Day,Non-Motorized,0.07,0.09,0.11,0.13
+Two-Three Days,Non-Motorized,0.09,0.11,0.14,0.16
+Four or More Days,Non-Motorized,0.09,0.12,0.15,0.17
+Telecommuter Only,Non-Motorized,0.09,0.11,0.14,0.15
+No telecommute,Other,0.0,0.01,0.01,0.01
+One Day,Other,0.01,0.01,0.01,0.01
+Two-Three Days,Other,0.01,0.01,0.01,0.01
+Four or More Days,Other,0.01,0.01,0.01,0.01
+Telecommuter Only,Other,0.01,0.01,0.01,0.02

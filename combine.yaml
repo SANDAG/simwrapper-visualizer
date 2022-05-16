@@ -78,7 +78,39 @@ tables:
   mode_share:
     merge:
       - tripMode
-  #mode_share_by_tele
+  mode_share_by_tele:
+    melt:
+      id_vars: telecommuteChoice
+      var_name: Mode
+    merge:
+      - telecommuteChoice
+      - Mode
+    subsets:
+      mode_share_by_tele_0:
+        query: 'telecommuteChoice == "No telecommute"'
+        transpose: Year
+        exclude:
+         - telecommuteChoice
+      mode_share_by_tele_1:
+        query: 'telecommuteChoice == "One Day"'
+        transpose: Year
+        exclude:
+         - telecommuteChoice
+      mode_share_by_tele_23:
+        query: 'telecommuteChoice == "Two-Three Days"'
+        transpose: Year
+        exclude:
+         - telecommuteChoice
+      mode_share_by_tele_4:
+        query: 'telecommuteChoice == "Four or More Days"'
+        transpose: Year
+        exclude:
+         - telecommuteChoice
+      mode_share_by_tele_5:
+        query: 'telecommuteChoice == "Telecommuter Only"'
+        transpose: Year
+        exclude:
+         - telecommuteChoice
   mode_share_ec:
     merge:
       - tripMode

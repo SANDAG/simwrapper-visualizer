@@ -43,13 +43,62 @@ layout:
         yAxisTitle: "VMT Per Capita"
 
   row2:
-    - title: "Mode Share by Telework Status"
+    - title: "Non-Telework Mode Share"
       description: "Resident Teleworkers Only - Vehicle Trips"
       type: "bar"
-      width: 2
+      width: 1
       height: 5
       props:
-        dataset: "mode_share_by_tele.csv"
-        x: "telecommuteChoice"
+        dataset: "mode_share_by_tele_0.csv"
+        x: "Year"
+        columns: ["SOV", "HOV", "Transit", "Non-Motorized", "Other"]
+        stacked: True
+        yAxisTitle: "Mode Share"
+    - title: "1 Day Teleworking/Week Mode Share"
+      description: "Resident Teleworkers Only - Vehicle Trips"
+      type: "bar"
+      width: 1
+      height: 5
+      props:
+        dataset: "mode_share_by_tele_1.csv"
+        x: "Year"
+        columns: ["SOV", "HOV", "Transit", "Non-Motorized", "Other"]
+        stacked: True
+        yAxisTitle: "Mode Share"
+
+  row3:
+    - title: "2-3 Days Teleworking/Week Mode Share"
+      description: "Resident Teleworkers Only - Vehicle Trips"
+      type: "bar"
+      width: 1
+      height: 5
+      props:
+        dataset: "mode_share_by_tele_23.csv"
+        x: "Year"
+        columns: ["SOV", "HOV", "Transit", "Non-Motorized", "Other"]
+        stacked: True
+        yAxisTitle: "Mode Share"
+    - title: "4 Days Teleworking/Week Mode Share"
+      description: "Resident Teleworkers Only - Vehicle Trips"
+      type: "bar"
+      width: 1
+      height: 5
+      props:
+        dataset: "mode_share_by_tele_1.csv"
+        x: "Year"
+        columns: ["SOV", "HOV", "Transit", "Non-Motorized", "Other"]
+        stacked: True
+        yAxisTitle: "Mode Share"
+
+  row4:
+    - title: "Full Teleworking Mode Share"
+      description: "Resident Teleworkers Only - Vehicle Trips"
+      type: "bar"
+      width: 1
+      height: 5
+      props:
+        dataset: "mode_share_by_tele_5.csv"
+        x: "Year"
+        columns: ["SOV", "HOV", "Transit", "Non-Motorized", "Other"]
         stacked: True
         yAxisTitle: "Mode Share"
