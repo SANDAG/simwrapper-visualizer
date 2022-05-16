@@ -165,7 +165,7 @@ tables:
         rename:
           stat:
             num_v_trips: "Vehicle Trips"
-            percent_total: "Percent Total"
+            percent_total: "Percent of Total"
         transpose: Year
 
   summary_mh:
@@ -178,7 +178,7 @@ tables:
         rename:
           stat:
             num_v_trips: "Vehicle Trips"
-            percent_total: "Percent Total"
+            percent_total: "Percent of Total"
         transpose: Year
   transit_summary:
     merge:

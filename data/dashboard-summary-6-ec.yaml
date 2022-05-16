@@ -7,10 +7,26 @@ header:
 
 layout:
   topsheetRow:
-    - title: "Overview"
-      type: "topsheet"
+    - title: "Vehicle Trips"
+      description: "Vehicle Trips ending in the Sorrento Valley Employment Center"
+      type: "line"
+      width: 1
+      height: 5
       props:
-        configFile: "topsheet-5-ec.yaml"
+        dataset: "summary_ec.csv"
+        x: "Year"
+        columns: ["Vehicle Trips"]
+        yAxisTitle: "Vehicle Trips"
+    - title: "Share of Trips"
+      description: "Share of vehicle trips that end in the Sorrento Valley Employment Center"
+      type: "line"
+      width: 1
+      height: 5
+      props:
+        dataset: "summary_ec.csv"
+        x: "Year"
+        columns: ["Percent of Total"]
+        yAxisTitle: "Percent of Total"
 
   row0:
     - title: "Employment Center Flow"
