@@ -22,6 +22,9 @@ for table in config['tables']:
             in_df.index.name = config['tables'][table]['transpose']
             in_df = in_df.reset_index()
 
+        if 'melt' in config['tables'][table]:
+            in_df = pd.melt(in_df, **config['tables'][table]['melt'])
+
         #if table == 'summary_ec':
         #    pdb.set_trace()
 
