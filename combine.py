@@ -66,6 +66,8 @@ for table in config['tables']:
                     totals[col] = config['tables'][table]['total'][col]
                     in_df = pd.concat((in_df.reset_index(), totals))
 
+        
+
         #if table == 'summary_ec':
         #    pdb.set_trace()
 
@@ -78,6 +80,13 @@ for table in config['tables']:
 
         #if table == 'summary_ec':
         #    pdb.set_trace()
+
+    if 'normalize' in config['tables'][table] and config['tables'][table]['normalize']:
+        for col in out_df:
+            try:
+                out_df[col] *= (100/out_df[col].sum())
+            except TypeError: #Not numeric
+                continue
 
     if 'pct_diff' in config['tables'][table]:
         for col in config['tables'][table]['pct_diff']:

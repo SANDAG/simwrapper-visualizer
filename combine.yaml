@@ -180,6 +180,15 @@ tables:
             num_v_trips: "Vehicle Trips"
             percent_total: "Percent of Total"
         transpose: Year
+  tele_choice:
+    transpose: Telework Status
+    merge:
+      - Telework Status
+    subsets:
+      tele_choice:
+        query: 
+        transpose: Year
+    normalize: True
   transit_summary:
     merge:
       - MODE
