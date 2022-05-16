@@ -12,6 +12,7 @@ f.close()
 
 for table in config['tables']:
     merge_cols = config['tables'][table]['merge']
+    first_run = True
 
     for run in config['runs']:
         in_df = pd.read_csv(base_path + config['runs'][run] + '\\' + table + '.csv')
@@ -69,13 +70,11 @@ for table in config['tables']:
         #    pdb.set_trace()
 
         #Merge tables from different runs together. If no table exists yet copy `in_df`
-        try:
-            if in_df.shape[0] == out_df.shape[0]:
-                out_df = out_df.merge(in_df.rename(columns = name_map), how = 'outer', on = merge_cols)
-            else:
-                raise NameError
-        except NameError:
+        if first_run:
             out_df = in_df.rename(columns = name_map)
+            first_run = False
+        else:
+            out_df = out_df.merge(in_df.rename(columns = name_map), how = 'outer', on = merge_cols)
 
         #if table == 'summary_ec':
         #    pdb.set_trace()

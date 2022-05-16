@@ -9,6 +9,8 @@ layout:
   topsheetRow:
     - title: "Overview"
       type: "line"
+      width: 1
+      height: 5
       props:
         dataset: "summary_telework.csv"
         x: "Year"

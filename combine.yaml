@@ -159,10 +159,27 @@ tables:
     transpose: stat
     merge:
       - stat
+    subsets:
+      summary_ec:
+        query: 'stat in ["num_v_trips", "percent_total"]'
+        rename:
+          stat:
+            num_v_trips: "Vehicle Trips"
+            percent_total: "Percent Total"
+        transpose: Year
+
   summary_mh:
     transpose: stat
     merge:
       - stat
+    subsets:
+      summary_mh:
+        query: 'stat in ["num_v_trips", "percent_total"]'
+        rename:
+          stat:
+            num_v_trips: "Vehicle Trips"
+            percent_total: "Percent Total"
+        transpose: Year
   transit_summary:
     merge:
       - MODE

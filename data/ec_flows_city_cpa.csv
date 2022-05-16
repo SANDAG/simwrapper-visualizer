@@ -1,13 +1,14 @@
-origin,destination,2035,2050
-Sorrento Valley Employment Center,Sorrento Valley Employment Center,31581.42269694,34201.14897236
-Mira Mesa,Sorrento Valley Employment Center,7819.12057678,7772.05879114
-Unincorporated,Sorrento Valley Employment Center,5495.2724559,5783.8792425
-Kearny Mesa,Sorrento Valley Employment Center,4829.461078,4811.7584828
-Clairemont Mesa,Sorrento Valley Employment Center,3948.8253494,4078.8602794
-Carlsbad,Sorrento Valley Employment Center,3539.1397208,3791.4061882
-Encinitas,Sorrento Valley Employment Center,3256.2754494,3525.4031941
-Downtown,Sorrento Valley Employment Center,3165.600798,3457.4900195
-Pacific Beach,Sorrento Valley Employment Center,2996.4590818,0.0
-Carmel Valley,Sorrento Valley Employment Center,2803.299401,0.0
-Chula Vista,Sorrento Valley Employment Center,0.0,3268.0638729
-Oceanside,Sorrento Valley Employment Center,0.0,3024.0499006
+origin,destination,2016,2025,2035,2050
+Sorrento Valley Employment Center,Sorrento Valley Employment Center,22887.72817916,25948.42160958,31581.42269694,34201.14897236
+Mira Mesa,Sorrento Valley Employment Center,6872.4441118,7087.6327349,7819.12057678,7772.05879114
+Unincorporated,Sorrento Valley Employment Center,5207.2315372,5291.4481045,5495.2724559,5783.8792425
+Clairemont Mesa,Sorrento Valley Employment Center,3850.9191617,3893.0848305,3948.8253494,4078.8602794
+Kearny Mesa,Sorrento Valley Employment Center,3498.4401199,3709.021956,4829.461078,4811.7584828
+Carlsbad,Sorrento Valley Employment Center,3095.3073854,3280.1457089,3539.1397208,3791.4061882
+Encinitas,Sorrento Valley Employment Center,3022.0948104,2999.4950104,3256.2754494,3525.4031941
+Carmel Valley,Sorrento Valley Employment Center,2793.2395211,2779.5399201,2803.299401,0.0
+Pacific Beach,Sorrento Valley Employment Center,2510.7514969,2639.9560878,2996.4590818,0.0
+University,Sorrento Valley Employment Center,2457.2894212,0.0,0.0,0.0
+Chula Vista,Sorrento Valley Employment Center,0.0,2673.9261481,0.0,3268.0638729
+Downtown,Sorrento Valley Employment Center,0.0,0.0,3165.600798,3457.4900195
+Oceanside,Sorrento Valley Employment Center,0.0,0.0,0.0,3024.0499006
