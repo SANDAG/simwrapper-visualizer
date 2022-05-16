@@ -103,7 +103,11 @@ for table in config['tables']:
 
     elif 'subsets' in config['tables'][table]:
         for subset in config['tables'][table]['subsets']:
-            subset_df = out_df.query(config['tables'][table]['subsets'][subset]['query'])
+            qry = config['tables'][table]['subsets'][subset]['query']
+            if qry == None:
+                subset_df = out_df.copy()
+            else:
+                subset_df = out_df.query(qry)
             if 'rename' in config['tables'][table]['subsets'][subset]:
                 for col in config['tables'][table]['subsets'][subset]['rename']:
                     subset_df[col] = subset_df[col].replace(config['tables'][table]['subsets'][subset]['rename'][col])
