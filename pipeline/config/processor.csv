@@ -1,0 +1,107 @@
+Description,Step,Type,Table,Out Col,In Col,Func
+Rename purpose,step_0,rename,airportCBXTrips,,,{'tripPurpose': 'tripPurposeDestination'}
+Rename purpose,step_0,rename,airportSANTrips,,,{'tripPurpose': 'tripPurposeDestination'}
+Define purpose (NA),step_0,column,internalExternalTrips,tripPurposeDestination,,Not Applicable
+Define purpose (NA),step_0,column,externalExternalTrips,tripPurposeDestination,,Not Applicable
+Rename purpose,step_0,rename,externalInternalTrips,,,{'tripPurpose': 'tripPurposeDestination'}
+Rename purpose,step_0,column,truckTrips,tripPurposeDestination,,Not Applicable
+Rename purpose,step_0,rename,visitorTrips,,,{'tripPurpose': 'tripPurposeDestination'}
+Household home city,step_0,raw,,,,households['homeCity'] = households['homeMGRA'].replace(mgra_city_map.set_index('MGRA')['city_name'].to_dict())
+Household home city or CPA,step_0,raw,,,,households['homeCityCPA'] = households['homeMGRA'].replace(mgra_city_cpa_map.set_index('MGRA')['Name'].to_dict())
+,step_0,raw,,,,"persons['telecommuteChoice'] = persons['telecommuteChoice'].str.replace(' a Week', '')"
+Bin continuous age data,step_1,bin,persons,age_bin,age,"[0,18,30,45,60, 100]"
+Order and rename age categories,step_1,replace,persons,age_bin,age_bin,"{'.-0.001.*': '0-18', '.18.0.*': '18-30', '.30.0.*': '30-45', '.45.0.*': '45-60', '.60.0.*': '60-100'}, regex=True"
+Order and rename race categories,step_1,replace,persons,race,race,"{'White Alone': 'White', 'Asian Alone': 'Asian', 'Black.*': 'Black', 'Two or More Major Race Groups': 'Two or More', 'Some Other.*': 'Other', 'Native Hawaiian.*': 'Other', 'American Indian.*': 'Other'}, regex=True"
+#Reduce telecommute choice values,step_1,replace,persons,telecommuteChoice,telecommuteChoice,"{'One Day a Week': 'One Day', 'Two-Three Days a Week': 'Two-Three Days', 'Four or More Days a Week': 'Four or More Days'}"
+Map trip modes,step_1,replace,trips,tripMode,tripMode,"{'Drive Alone': 'SOV', 'Shared Ride 2': 'HOV', 'Shared Ride 3+': 'HOV', 'Bike': 'Non-Motorized', 'Walk': 'Non-Motorized', 'Micro-Mobility': 'Other', 'Non-Pooled TNC': 'Other', 'Pooled TNC': 'Other', 'School Bus': 'Other', 'Taxi': 'Other', 'Truck': 'Other'}"
+Map purpose,step_1,replace,trips,tripPurposeDestination,tripPurposeDestination,"{'work related':'Work', 'Work-Based': 'Work', 'Visiting': 'Other', 'Visit': 'Other', 'Resident Personal': 'Other', 'Visitor Personal': 'Other', 'External': 'Other', 'Unknown': 'Other', 'Non-Work':'Other', 'Eating Out': 'Dining', 'Dining': 'Dining', 'Discretionary': 'Discretionary', 'Recreation': 'Discretionary', 'Resident Business': 'Other', 'Visitor Business': 'Other', 'Not Applicable': 'Other', 'University': 'School', 'Goods': 'Other', 'Return to Establishment': 'Other', 'Cargo': 'Other'}"
+Rename default table column to model,step_1,rename,trips,,,{'table': 'model'}
+#Drop duplicate trips cause by merging,step_1,raw,trips,,,"trips = trips.drop_duplicates(subset=['tripID', 'model'])"
+Clean model values,step_1,raw,trips,,,"trips['model'] = trips['model'].str.replace('Trips', '')"
+Map TOD values,step_1,replace,trips,departTimeFiveTod,departTimeFiveTod,"{1: 'EA', 2: 'AM', 3: 'MD', 4: 'PM', 5: 'EV'}"
+Aggregate truck mode values,step_1,replace,trips,tripMode,tripMode,"{'Light Heavy Duty Truck': 'Truck', 'Medium Heavy Duty Truck': 'Truck', 'Heavy Heavy Duty Truck': 'Truck'}"
+Aggregate transit mode values,step_1,raw,trips,,,"trips['tripMode'] = np.select([(trips['tripMode'].str.contains('to Transit'))], ['Transit'], default=trips['tripMode'])"
+Trip VMT,step_1,raw,trips,,,trips['vmt'] = (trips['distanceDrive'].fillna(0) + trips['distanceDriveTransit'].fillna(0))*trips['weightTrip']
+Trip Distance (weighted),step_1,column,trips,distance,,distanceTotal*weightTrip
+Trip Time (weighted),step_1,column,trips,time,,timeTotal*weightTrip
+#EC Trip Distance (weighted),step_1,column,ec_trips,distance,,distanceTotal*weightTrip
+#EC Trip Time (weighted),step_1,column,ec_trips,time,,timeTotal*weightTrip
+Map transit mode values,step_1,replace,transit_onoff,MODE,MODE,"{'PREM': 'Premium Transit', 'BUS': 'Local Bus', 'ALLPEN': 'Local Bus and Premium Transit'}"
+Map transit access mode values,step_1,replace,transit_onoff,ACCESSMODE,ACCESSMODE,"{'KNR': 'Kiss and Ride to Transit', 'PNR': 'Park and Ride to Transit', 'WLK': 'Walk to Transit'}"
+Add time period to highway network,step_1,replace,highway_load,timePeriod,table,"{""hwyload_EA"": ""EA"",""hwyload_AM"": ""AM"",""hwyload_MD"": ""MD"",""hwyload_PM"": ""PM"",""hwyload_EV"": ""EV""}"
+Total A-B Auto flow,step_1,column,highway_load,AB_Flow_Auto,,AB_Flow_SOV_NTPL+AB_Flow_SOV_TPL+AB_Flow_SR2L+AB_Flow_SR3L+AB_Flow_SOV_NTPM+AB_Flow_SOV_TPM+AB_Flow_SR2M+AB_Flow_SR3M+AB_Flow_SOV_NTPH+AB_Flow_SOV_TPH+AB_Flow_SR2H+AB_Flow_SR3H
+Total A-B Auto flow,step_1,column,highway_load,BA_Flow_Auto,,BA_Flow_SOV_NTPL+BA_Flow_SOV_TPL+BA_Flow_SR2L+BA_Flow_SR3L+BA_Flow_SOV_NTPM+BA_Flow_SOV_TPM+BA_Flow_SR2M+BA_Flow_SR3M+BA_Flow_SOV_NTPH+BA_Flow_SOV_TPH+BA_Flow_SR2H+BA_Flow_SR3H
+Total A-B Truck flow,step_1,column,highway_load,AB_Flow_Truck,,AB_Flow_lhd+AB_Flow_mhd+AB_Flow_hhd
+Total B-A Truck flow,step_1,column,highway_load,BA_Flow_Truck,,BA_Flow_lhd+BA_Flow_mhd+BA_Flow_hhd
+Total A-B flow,step_1,column,highway_load,AB_Flow,,AB_Flow_Auto+AB_Flow_Truck
+Total B-A flow,step_1,column,highway_load,BA_flow,,BA_Flow_Auto+BA_Flow_Truck
+Fill any null values in highway load,step_1,raw,highway_load,,,highway_load = highway_load.fillna(0)
+Restructure highway network by TOD,step_1,raw,,,,"highway_network = pd.wide_to_long(df=hwyTcad,stubnames=[""ABTM"",""BATM"",""ABTX"",""BATX"",""ABPRELOAD"",""BAPRELOAD""],i=[""ID"",""Length"",""IFC""],j=""timePeriod"",sep=""_"",suffix=""\w+"").reset_index()"
+Fill any null values in highway network,step_1,raw,,,,highway_network = highway_network.fillna(0)
+Map IFC values,step_1,replace,highway_network,ifc_desc,IFC,"{1:""Freeway"",2:""Prime Arterial"",3:""Major Arterial"",4:""Collector"",5:""Local Collector"",6:""Rural Coolector"",7:""Local Road"",8:""Freeway Connector Ramp"",9:""Local Ramp"",10:""Zone Connector""}"
+MH trips,step_2,raw,,,,mh_trips = trips[(trips['originMGRA'].isin(mgra_mohub_urban_core['MGRA'])) | (trips['destinationMGRA'].isin(mgra_mohub_urban_core['MGRA']) )]
+EC trips,step_2,raw,,,,ec_trips = trips[trips['destinationMGRA'].isin(sv_ec_mgras['MGRA'])]
+#Combine MH flows,step_2,raw,,,,"mh_trips = pd.concat([mh_trips_dest, mh_trips_origin]).drop_duplicates()"
+Auto VMT,step_2,column,network,vmt_auto,,(AB_Flow_Auto+BA_Flow_Auto) * Length
+Truck VMT,step_2,column,network,vmt_truck,,(AB_Flow_Truck+BA_Flow_Truck) * Length
+Bus VMT,step_2,column,network,vmt_bus,,(ABPRELOAD+BAPRELOAD) * Length
+Total VMT,step_2,column,network,vmt_total,,vmt_auto+vmt_truck+vmt_bus
+Auto VHT,step_2,column,network,vht_auto,,(AB_Flow_Auto * AB_Time) + (BA_Flow_Auto * BA_Time)
+Truck VHT,step_2,column,network,vht_truck,,(AB_Flow_Truck * AB_Time) + (BA_Flow_Truck * BA_Time)
+Bus VHT,step_2,column,network,vht_bus,,(ABPRELOAD * AB_Time) + (BAPRELOAD * BA_Time)
+Total VHT,step_2,column,network,vht_total,,vht_auto+vht_truck+vht_bus
+Auto VHD,step_2,column,network,vhd_auto,,(AB_Flow_Auto * (AB_Time - ABTM - ABTX) / 60.0) +  (BA_Flow_Auto * (BA_Time - BATM - BATX) / 60.0)
+Truck VHD,step_2,column,network,vhd_truck,,(AB_Flow_Truck * (AB_Time - ABTM - ABTX) / 60.0) +  (BA_Flow_Truck * (BA_Time - BATM - BATX) / 60.0)
+Bus VHD,step_2,column,network,vhd_bus,,(ABPRELOAD * (AB_Time - ABTM - ABTX) / 60.0) + (BAPRELOAD * (BA_Time - BATM - BATX) / 60.0)
+Lower bound VHD to 0,step_2,raw,,,,"network[['vhd_auto','vhd_truck','vhd_bus']] = network[['vhd_auto','vhd_truck','vhd_bus']].clip(0)"
+Total VHD,step_2,column,network,vhd_total,,vhd_auto+vhd_truck+vhd_bus
+EC trips - Origin City,step_2,raw,,,,ec_trips['originCity'] = ec_trips['originMGRA'].replace(mgra_city_map.set_index('MGRA')['city_name'].to_dict())
+EC trips - Destination City,step_2,raw,,,,ec_trips['destinationCity'] = ec_trips['destinationMGRA'].replace(mgra_city_map.set_index('MGRA')['city_name'].to_dict())
+EC trips - Origin City/CPA,step_2,raw,,,,ec_trips['originCityCPA'] = ec_trips['originMGRA'].replace(mgra_city_cpa_map.set_index('MGRA')['Name'].to_dict())
+EC trips - Destination City/CPA,step_2,raw,,,,ec_trips['destinationCityCPA'] = ec_trips['destinationMGRA'].replace(mgra_city_cpa_map.set_index('MGRA')['Name'].to_dict())
+,,,,,,
+Rename Regional VMT Per Capita columns,step_3,rename,vmt_per_capita_by_taz,,,{'homeTAZ': 'TAZ'}
+Rename O-D flow columns,step_3,rename,mgra_od_flows,,,"{'originMGRA':'origin', 'destinationMGRA':'destination', 'od_flows':'count'}"
+Rename O-D flow columns,step_3,rename,taz_od_flows,,,"{'originTAZ':'origin', 'destinationTAZ':'destination', 'od_flows':'count'}"
+Rename EC O-D flow columns,step_3,rename,ec_flows_mgra,,,"{'originMGRA':'origin', 'destinationMGRA':'destination', 'ec_flows':'count'}"
+Rename EC O-D flow columns,step_3,rename,ec_flows_taz,,,"{'originTAZ':'origin', 'destinationTAZ':'destination', 'ec_flows':'count'}"
+Rename EC O-D flow columns,step_3,rename,ec_flows_city,,,"{'originCity':'origin', 'destinationCity':'destination', 'ec_flows':'count'}"
+Rename EC O-D flow columns,step_3,rename,ec_flows_city_cpa,,,"{'originCityCPA':'origin', 'destinationCityCPA':'destination', 'ec_flows':'count'}"
+Rename MH O-D flow columns,step_3,rename,mh_flows_taz,,,"{'originTAZ':'origin', 'destinationTAZ':'destination', 'mh_flows':'count'}"
+,step_3,raw,,,,"mgra_od_flows = mgra_od_flows.sort_values('count', ascending=False).head(100).round(1)"
+,step_3,raw,,,,"taz_od_flows = taz_od_flows.sort_values('count', ascending=False).head(20).round(1)"
+,step_3,raw,,,,"ec_flows_mgra = ec_flows_mgra.sort_values('count', ascending=False).head(100).round(1)"
+,step_3,raw,,,,"ec_flows_taz = ec_flows_taz.sort_values('count', ascending=False)"
+,step_3,raw,,,,ec_flows_taz['destination'] = ec_flows_taz['destination'].iloc[0].round(1)
+,step_3,raw,,,,"ec_flows_taz_full = ec_flows_taz.groupby(['origin', 'destination'])['count'].sum().sort_values(ascending=False).reset_index(drop=False)"
+,step_3,raw,,,,"ec_flows_taz = ec_flows_taz.groupby(['origin', 'destination'])['count'].sum().sort_values(ascending=False).reset_index(drop=False).head(20)"
+,step_3,raw,,,,"ec_flows_city_cpa = ec_flows_city_cpa.sort_values('count', ascending=False).head(10)"
+#,step_3,raw,,,,ec_flows_city_cpa['destination'] = ec_flows_city_cpa['destination'].iloc[0].round(1)
+#,step_3,raw,,,,"ec_flows_city_cpa = ec_flows_city_cpa.groupby(['origin', 'destination'])['count'].sum().sort_values(ascending=False).reset_index(drop=False).head(20)"
+,step_3,raw,,,,"mh_flows_taz = mh_flows_taz.sort_values('count', ascending=False)"
+,step_3,raw,,,,mh_flows_taz['destination'] = mh_flows_taz['destination'].iloc[0].round(1)
+,step_3,raw,,,,"mh_flows_taz_full = mh_flows_taz.groupby(['origin', 'destination'])['count'].sum().sort_values(ascending=False).reset_index(drop=False).round(1)"
+,step_3,raw,,,,"mh_flows_taz = mh_flows_taz.groupby(['origin', 'destination'])['count'].sum().sort_values(ascending=False).reset_index(drop=False).head(20)"
+#Transform mode share data (pie chart),step_3,raw,mode_share,,,mode_share = mode_share.set_index('tripMode').T.round(1)
+,step_3,raw,mode_share_by_tele,,,"mode_share_by_tele = mode_share_by_tele.pivot(index='telecommuteChoice', columns='tripMode', values='tele_mode_share').reset_index()"
+,step_3,raw,tele_choice,,,tele_choice = tele_choice.set_index('telecommuteChoice')[['num_workers']].T.round(1)
+,step_3,raw,pop_by_race,,,"pop_by_race = pop_by_race.set_index('index').reindex(['White', 'Asian', 'Black', 'Two or More', 'Other']).reset_index().round(1)"
+,step_3,raw,pop_by_race,,,pop_by_age = pop_by_age.sort_values('index').round(1)
+,step_3,raw,length_by_mode,,,"length_by_mode = length_by_mode.set_index('tripMode').reindex(['SOV', 'HOV', 'Transit', 'Truck', 'Non-Motorized', 'Other']).reset_index().round(1)"
+,step_3,raw,length_by_mode_ec,,,"length_by_mode_ec = length_by_mode_ec.set_index('tripMode').reindex(['SOV', 'HOV', 'Transit', 'Truck', 'Non-Motorized', 'Other']).reset_index().dropna().round(1)"
+,step_3,raw,length_by_mode_mh,,,"length_by_mode_mh = length_by_mode_mh.set_index('tripMode').reindex(['SOV', 'HOV', 'Transit', 'Truck', 'Non-Motorized', 'Other']).reset_index().dropna().round(1)"
+,step_3,raw,,,,vmt_per_capita_by_taz = vmt_per_capita_by_taz.dropna(how='all').fillna(0).round(1)
+,step_3,raw,,,,vmt_per_capita_by_city = vmt_per_capita_by_city.dropna(how='all').fillna(0).round(1)
+,step_3,raw,mode_share,,,"mode_share = mode_share.set_index('tripMode').reindex(['SOV', 'HOV', 'Transit', 'Truck', 'Non-Motorized', 'Other']).reset_index().round(1)"
+,step_3,raw,mode_share_ec,,,"mode_share_ec = mode_share_ec.set_index('tripMode').reindex(['SOV', 'HOV', 'Transit', 'Truck', 'Non-Motorized', 'Other']).reset_index().dropna().round(1)"
+,step_3,raw,mode_share_mh,,,"mode_share_mh = mode_share_mh.set_index('tripMode').reindex(['SOV', 'HOV', 'Transit', 'Truck', 'Non-Motorized', 'Other']).reset_index().dropna().round(1)"
+,step_3,raw,vmt_per_capita_by_tele,,,"vmt_per_capita_by_tele = vmt_per_capita_by_tele.set_index('telecommuteChoice').reindex(['No telecommute','One Day', 'Two-Three Days', 'Four or More Days', 'Telecommuter Only']).reset_index().round(1)"
+,step_3,raw,mode_share_by_tele,,,"mode_share_by_tele = mode_share_by_tele.set_index('telecommuteChoice').reindex(['No telecommute', 'One Day', 'Two-Three Days', 'Four or More Days', 'Telecommuter Only']).reset_index()"
+,step_3,raw,mode_share_by_tele,,,"mode_share_by_tele = mode_share_by_tele[['telecommuteChoice', 'SOV', 'HOV', 'Transit', 'Non-Motorized', 'Other']].round(2)"
+,step_3,raw,,,,"tele_choice = tele_choice[['One Day', 'Two-Three Days', 'Four or More Days', 'Telecommuter Only']].round(1)"
+Trip Mode comparison,step_3,raw,,,,"mode_comparison_mh = pd.concat([mode_share.assign(type='Region'), mode_share_ec.assign(type='Employment Center'), mode_share_mh.assign(type='Mobility Hub')], axis=0).pivot(columns='type', values='mode_share', index='tripMode').reset_index()"
+,step_3,raw,,,,"mode_comparison_mh = mode_comparison_mh.set_index('tripMode').reindex(['SOV', 'HOV', 'Transit', 'Truck', 'Non-Motorized', 'Other']).reset_index().round(1)"
+,step_3,raw,,,,vmt_per_capita_by_taz['TAZ'] = vmt_per_capita_by_taz['TAZ'].astype(int).round(1)
+,step_3,raw,,,,"trips_by_tod = trips_by_tod.set_index('departTimeFiveTod').reindex(['EA', 'AM', 'MD', 'PM', 'EV']).reset_index().round(1)"
+,step_3,raw,,,,ao_dist = ao_dist.round(1)
+,step_3,raw,,,,purpose_share = purpose_share.round(1)

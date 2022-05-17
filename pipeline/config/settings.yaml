@@ -1,0 +1,123 @@
+#######################################################################################
+#                                                                                     #
+#                                Data Pipeline Settings                               #
+#                                                                                     #
+#######################################################################################
+
+
+# Specify data to extract and load
+extract:
+    - filepath: "T:/ABM/user/esanc/temp/simwrapper/test_data/test_report"
+      test_size:
+      data:
+          - "persons.csv"
+          - "households.csv"
+          - "mgraBasedInput.csv"
+          - "individualTrips.csv"
+          - "jointTrips.csv"
+          - "internalExternalTrips.csv"
+          - "airportCBXTrips.csv"
+          - "airportSANTrips.csv"
+          - "commercialVehicleTrips.csv"
+          - "crossBorderTrips.csv"
+          - "externalInternalTrips.csv"
+          - "externalExternalTrips.csv"
+          - "truckTrips.csv"
+          - "visitorTrips.csv"
+          - "hwyload_*.csv"
+          - "hwyTcad.csv"
+          - "transit_onoff.csv"
+    - filepath: "T:/ABM/user/esanc/temp/simwrapper/test_data/test_other"
+      test_size:
+      data:
+          # - "mgra_city_map_ec.csv"
+          - "mgra_city_map.csv"
+          - "mgra_mohub_urban_core.csv"
+          - "mgra_city_cpa_map.csv"
+          - "sv_ec_mgras.csv" # Sorrento Valley Employment Center
+
+# Specify transformation steps
+transform:
+    processor: "config/processor.csv"
+    summarizer: "config/expressions.csv"
+    steps:
+        - name: step_0
+          process: True
+        - name: step_1
+          concat:
+              - table_name: trips
+                include:
+                    - individualTrips
+                    - jointTrips
+                    - internalExternalTrips
+                    - airportCBXTrips
+                    - airportSANTrips
+                    - commercialVehicleTrips
+                    - crossBorderTrips
+                    - externalInternalTrips
+                    - externalExternalTrips
+                    - truckTrips
+                    - visitorTrips
+              - table_name: highway_load
+                include:
+                    - 'hwyload_*'
+          merge:
+              - table_name: synthetic
+                include:
+                    - persons
+                    - households
+                merge_cols:
+                    - hhId
+                    - hhId
+                merge_type: left
+              - table_name: trips
+                include:
+                    - trips
+                    - synthetic
+                merge_cols:
+                    - personID
+                    - personId
+                merge_type: left
+          process: True
+        - name: step_2
+          merge:
+              # - table_name: ec_trips
+                # include:
+                    # - trips
+                    # - sv_ec_mgras
+                # merge_cols:
+                    # - destinationMGRA
+                    # - MGRA
+                # merge_type: inner
+              # - table_name: mh_trips_dest
+                # include:
+                    # - trips
+                    # - mgra_mohub_urban_core
+                # merge_cols:
+                    # - destinationMGRA
+                    # - MGRA
+                # merge_type: inner
+              # - table_name: mh_trips_origin
+                # include:
+                    # - trips
+                    # - mgra_mohub_urban_core
+                # merge_cols:
+                    # - originMGRA
+                    # - MGRA
+                # merge_type: inner
+              - table_name: network
+                include:
+                    - highway_network
+                    - highway_load
+                merge_cols:
+                    - ["ID", "timePeriod"]
+                    - ["ID1", "timePeriod"]
+                merge_type: left
+          process: True
+        - name: step_3
+          summarize: True
+          process: True
+
+load:
+    outdir: "T:/ABM/user/esanc/temp/visualizer/2016_RTP/"
+    empty_fill: 0

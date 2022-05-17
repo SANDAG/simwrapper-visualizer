@@ -1,0 +1,101 @@
+Description,Out Table,Out Col,In Table,Filter,In Col,Func,Group
+#,,,,,,,
+Number of Households,summary,num_hhs,households,,hhId,count,
+Average Household Income,summary,hh_income,households,,hhIncome,mean,
+Average Household Size,summary,hh_size,households,,hhPersons,mean,
+Average Auto Ownership,summary,auto_ownership,households,,autos,mean,
+Number of Persons,summary,num_persons,persons,,personId,count,
+Number of Workers,summary,num_workers,persons,"employmentStatus in ['Employed Full-Time','Employed Part-Time']",personId,count,
+Number of Teleworkers,summary,num_teleworkers,persons,"(employmentStatus in ['Employed Full-Time','Employed Part-Time'])  & (telecommuteChoice != 'No telecommute')",personId,count,
+Total VMT,summary,total_vmt,network,,vmt_total,sum,
+Total VHT,summary,total_vht,network,,vht_total,sum,
+Total VHD,summary,total_vhd,network,,vhd_total,sum,
+Total Vehicle Trips,summary,num_v_trips,trips,,weightTrip,sum,
+Total Person Trips,summary,num_p_trips,trips,,weightPersonTrip,sum,
+Resident Vehicle Trips,summary,_num_res_p_trips,trips,"model in ['individual', 'internalExternal', 'joint']",weightPersonTrip,sum,
+Resident Trip Rate,summary,resident_trip_rate,trips,,,_num_res_p_trips / num_persons,
+Worker Person Trips,summary,_num_worker_p_trips,trips,"employmentStatus in ['Employed Full-Time','Employed Part-Time']",weightPersonTrip,sum,
+Worker Trip Rate,summary,worker_trip_rate,trips,"employmentStatus in ['Employed Full-Time','Employed Part-Time']",,_num_worker_p_trips / num_workers,
+#,,,,,,,
+Populations by race count,pop_by_race,race_count,persons,,race,value_counts,
+Populations by race share,pop_by_race,race_share,persons,,,(race_count / sum(race_count)) * 100,
+Populations by age count,pop_by_age,age_count,persons,,age_bin,value_counts,
+Populations by age share,pop_by_age,age_share,persons,,,(age_count / sum(age_count)) * 100,
+#,,,,,,,
+Number of transit boardings,transit_summary,num_boardings,transit_onoff,,BOARDINGS,sum,"MODE,ACCESSMODE,TOD"
+#,,,,,,,
+Worker Tele Choice Counts,tele_choice,num_workers,persons,"(employmentStatus in ['Employed Full-Time','Employed Part-Time'])",personId,count,telecommuteChoice
+Worker Tele Choice Share,tele_choice,tele_share,persons,,,num_workers/sum(num_workers),telecommuteChoice
+#,,,,,,,
+Mode Count by Tele Choice,mode_share_by_tele,_tele_mode_count,trips,"employmentStatus in ['Employed Full-Time','Employed Part-Time']",weightTrip,sum,"telecommuteChoice,tripMode"
+Tele Count,mode_share_by_tele,_tele_count,trips,"employmentStatus in ['Employed Full-Time','Employed Part-Time']",weightTrip,sum,telecommuteChoice
+Mode Share by Tele Choice,mode_share_by_tele,tele_mode_share,trips,,,_tele_mode_count / _tele_count,"telecommuteChoice,tripMode"
+#,,,,,,,
+Trip Mode Counts,mode_share,_mode_counts,trips,,weightTrip,sum,tripMode
+Trip Mode Share,mode_share,mode_share,trips,,,(_mode_counts / num_v_trips) * 100,tripMode
+#,,,,,,,
+Trip Purpose Counts,purpose_share,purpose_counts,trips,,weightTrip,sum,tripPurposeDestination
+Trip Purpose Counts,purpose_share,purpose_share,trips,,,(purpose_counts / num_v_trips) * 100,tripPurposeDestination
+#,,,,,,,
+Auto Ownership Count,ao_dist,ao_counts,households,,autos,value_counts,
+Auto Ownership Share,ao_dist,ao_dist,households,,,(ao_counts / sum(ao_counts)) * 100,
+#,,,,,,,
+Auto Ownership by MAZ,ao_by_mgra,ao_by_mgra,households,,autos,mean,homeMGRA
+#,,,,,,,
+Origin Destination Flows,mgra_od_flows,od_flows,trips,,weightTrip,sum,"originMGRA,destinationMGRA"
+Origin Destination Flows,taz_od_flows,od_flows,trips,,weightTrip,sum,"originTAZ,destinationTAZ"
+#,,,,,,,
+#Total Vehicle Trips,trips_by_tod,_num_resident_v_trips,trips,"model in ['individual', 'internalExternal', 'joint']",weightTrip,sum,
+Total Vehicle Trips,trips_by_tod,_num_resident_v_trips,trips,,weightTrip,sum,
+Trips by Time of Day,trips_by_tod,trips_by_tod,trips,,weightTrip,sum,departTimeFiveTod
+Trip Share by Time of Day,trips_by_tod,trip_share_by_tod,trips,,,(trips_by_tod / _num_resident_v_trips) * 100,departTimeFiveTod
+#,,,,,,,
+Total Distance by Mode,length_by_mode,_tot_dist_by_mode,trips,,distance,sum,tripMode
+Distance by Mode,length_by_mode,dist_by_mode,trips,,,_tot_dist_by_mode/_mode_counts,tripMode
+Total Time by Mode,length_by_mode,_tot_time_by_mode,trips,,time,sum,tripMode
+Time by Mode,length_by_mode,time_by_mode,trips,,,_tot_time_by_mode/_mode_counts,tripMode
+#,,,,,,,
+VMT Per MGRA,vmt_per_capita_by_mgra,_vmt_per_mgra,trips,,vmt,sum,homeMGRA
+Persons Per MGRA,vmt_per_capita_by_mgra,_persons_per_mgra,households,,hhPersons,sum,homeMGRA
+VMT Per Capita,vmt_per_capita_by_mgra,vmt_per_capita_by_mgra,trips,,,_vmt_per_mgra/_persons_per_mgra,homeMGRA
+#,,,,,,,
+VMT Per TAZ,vmt_per_capita_by_taz,_vmt_per_taz,trips,,vmt,sum,homeTAZ
+Persons Per TAZ,vmt_per_capita_by_taz,_persons_per_taz,households,,hhPersons,sum,homeTAZ
+VMT Per Capita,vmt_per_capita_by_taz,vmt_per_capita_by_taz,trips,,,_vmt_per_taz/_persons_per_taz,homeTAZ
+#,,,,,,,
+VMT Per City,vmt_per_capita_by_city,_vmt_per_city,trips,,vmt,sum,homeCity
+Persons Per City,vmt_per_capita_by_city,_persons_per_city,households,,hhPersons,sum,homeCity
+VMT Per City,vmt_per_capita_by_city,vmt_per_capita_by_city,trips,,,_vmt_per_city/_persons_per_city,homeCity
+#,,,,,,,
+VMT Per MGRA,vmt_per_capita_by_tele,_vmt_per_telework,trips,"(employmentStatus in ['Employed Full-Time','Employed Part-Time'])",vmt,sum,telecommuteChoice
+Persons Per MGRA,vmt_per_capita_by_tele,_persons_per_telework,persons,"(employmentStatus in ['Employed Full-Time','Employed Part-Time'])",personId,count,telecommuteChoice
+VMT Per Capita,vmt_per_capita_by_tele,vmt_per_capita_by_tele,trips,,,_vmt_per_telework/_persons_per_telework,telecommuteChoice
+#,,,,,,,
+Employment Center Flows (MGRA),ec_flows_mgra,ec_flows,ec_trips,tripPurposeDestination == 'Work',weightTrip,sum,"originMGRA,destinationMGRA"
+Employment Center Flows (TAZ),ec_flows_taz,ec_flows,ec_trips,tripPurposeDestination == 'Work',weightTrip,sum,"originTAZ,destinationTAZ"
+Employment Center Flows (City),ec_flows_city,ec_flows,ec_trips,tripPurposeDestination == 'Work',weightTrip,sum,"originCity,destinationCity"
+Employment Center Flows (City/CPA),ec_flows_city_cpa,ec_flows,ec_trips,tripPurposeDestination == 'Work',weightTrip,sum,"originCityCPA,destinationCityCPA"
+#,,,,,,,
+EC Trip Count,summary_ec,num_v_trips,ec_trips,tripPurposeDestination == 'Work',weightTrip,sum,
+Total Work Vehicle Trips,summary_ec,_num_regional_work_v_trips,trips,tripPurposeDestination == 'Work',weightTrip,sum,
+% Trips to MH,summary_ec,percent_total,ec_trips,,,(num_v_trips / _num_regional_work_v_trips) * 100,
+EC Trip Mode Counts,mode_share_ec,_mode_counts,ec_trips,tripPurposeDestination == 'Work',weightTrip,sum,tripMode
+EC Trip Mode Share,mode_share_ec,mode_share,ec_trips,tripPurposeDestination == 'Work',,(_mode_counts / num_v_trips) * 100,tripMode
+EC total Distance by Mode,length_by_mode_ec,_tot_dist_by_mode,ec_trips,tripPurposeDestination == 'Work',distance,sum,tripMode
+EC distance by Mode,length_by_mode_ec,dist_by_mode,ec_trips,tripPurposeDestination == 'Work',,_tot_dist_by_mode/_mode_counts,tripMode
+EC total Time by Mode,length_by_mode_ec,_tot_time_by_mode,ec_trips,tripPurposeDestination == 'Work',time,sum,tripMode
+EC time by Mode,length_by_mode_ec,time_by_mode,ec_trips,tripPurposeDestination == 'Work',,_tot_time_by_mode/_mode_counts,tripMode
+#,,,,,,,
+MH Trip Count,summary_mh,num_v_trips,mh_trips,,weightTrip,sum,
+Total Vehicle Trips,summary_mh,_num_regional_v_trips,trips,,weightTrip,sum,
+% Trips to MH,summary_mh,percent_total,mh_trips,,,(num_v_trips / _num_regional_v_trips) * 100,
+MH Trip Mode Counts,mode_share_mh,_mode_counts,mh_trips,,weightTrip,sum,tripMode
+MH Trip Mode Share,mode_share_mh,mode_share,mh_trips,,,(_mode_counts / num_v_trips) * 100,tripMode
+MH total Distance by Mode,length_by_mode_mh,_tot_dist_by_mode,mh_trips,,distance,sum,tripMode
+MH distance by Mode,length_by_mode_mh,dist_by_mode,mh_trips,,,_tot_dist_by_mode/_mode_counts,tripMode
+MH total Time by Mode,length_by_mode_mh,_tot_time_by_mode,mh_trips,,time,sum,tripMode
+MH time by Mode,length_by_mode_mh,time_by_mode,mh_trips,,,_tot_time_by_mode/_mode_counts,tripMode
+Mobility Hubs Flows (TAZ),mh_flows_taz,mh_flows,mh_trips,,weightTrip,sum,"originTAZ,destinationTAZ"
+#,,,,,,,
+Trips by Model,trip_model_summary,person_trips,trips,,weightPersonTrip,sum,model
+Trips by Model,trip_model_summary,vehicle_trips,trips,,weightTrip,sum,model
