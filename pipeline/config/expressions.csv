@@ -31,6 +31,9 @@ Mode Count by Tele Choice,mode_share_by_tele,_tele_mode_count,trips,"employmentS
 Tele Count,mode_share_by_tele,_tele_count,trips,"employmentStatus in ['Employed Full-Time','Employed Part-Time']",weightTrip,sum,telecommuteChoice
 Mode Share by Tele Choice,mode_share_by_tele,tele_mode_share,trips,,,_tele_mode_count / _tele_count,"telecommuteChoice,tripMode"
 #,,,,,,,
+Total Work Tours,mode_share_to_work,_total_work_tours,individualTours,"tourPurpose == ""Work""",weightTour,sum,
+Work Tours by Mode,mode_share_to_work,_mode_counts_to_work,individualTours,"tourPurpose == ""Work""",weightTour,sum,tourMode
+Mode Share to Work,mode_share_to_work,mode_share,individualTours,,,(_mode_counts_to_work) / (_total_work_tours) * 100,tourMode
 Trip Mode Counts,mode_share,_mode_counts,trips,,weightTrip,sum,tripMode
 Trip Mode Share,mode_share,mode_share,trips,,,(_mode_counts / num_v_trips) * 100,tripMode
 #,,,,,,,

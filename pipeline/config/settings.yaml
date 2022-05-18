@@ -13,6 +13,7 @@ extract:
           - "persons.csv"
           - "households.csv"
           - "mgraBasedInput.csv"
+          - "individualTours.csv"
           - "individualTrips.csv"
           - "jointTrips.csv"
           - "internalExternalTrips.csv"

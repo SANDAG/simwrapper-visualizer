@@ -1,0 +1,26 @@
+outpath: tables
+
+tables:
+  PrimaryMeasures:
+    infile: PerformanceMeasures_FinalPlan.xlsx
+    input_args:
+      sheet_name: PrimaryMeasures
+      header:
+      skiprows: 4
+      usecols: [3, 4, 5, 6, 7, 8, 9]
+    scenarios:
+      NoBuild:
+        2016: 3
+        2025: 4
+        2035: 5
+        2050: 6
+      Build:
+        2016: 3
+        2025: 7
+        2035: 8
+        2050: 9
+    measures:
+      VMT: 34
+      VMTPerCapita: 35
+      CO2Emmissions: 31
+      CO2EmmissionsPerCapita: 32

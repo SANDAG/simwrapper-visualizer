@@ -80,7 +80,7 @@ layout:
         yAxisTitle: Trips per Person
 
   row0:
-    - title: "VMT Per Capita"
+    - title: "2016 VMT Per Capita"
       description: Vehicle Miles Traveled Per Capita by Jurisdiction - All Trips
       type: "map"
       height: 7
@@ -92,9 +92,7 @@ layout:
         datasetJoinCol: "homeCity"
         datasetValue: '2016'
         exponentColors: false
-
-  row1:
-    - title: "VMT Per Capita"
+    - title: "2016 VMT Per Capita"
       description: Vehicle Miles Traveled Per Capita by Traffic Analysis Zone (TAZ) - All Trips
       type: "map"
       height: 7
@@ -105,4 +103,82 @@ layout:
         dataset: "vmt_per_capita_by_taz.csv"
         datasetJoinCol: "TAZ"
         datasetValue: '2016'
+        exponentColors: false
+
+  row1:
+    - title: "2025 VMT Per Capita"
+      description: Vehicle Miles Traveled Per Capita by Jurisdiction - All Trips
+      type: "map"
+      height: 7
+      props:
+        boundaries: 'cities.geojson'
+        boundariesJoinCol: 'Name'
+        boundariesLabels: 'City'
+        dataset: "vmt_per_capita_by_city.csv"
+        datasetJoinCol: "homeCity"
+        datasetValue: '2025'
+        exponentColors: false
+    - title: "2025 VMT Per Capita"
+      description: Vehicle Miles Traveled Per Capita by Traffic Analysis Zone (TAZ) - All Trips
+      type: "map"
+      height: 7
+      props:
+        boundaries: 'taz_chester.geojson'
+        boundariesJoinCol: 'TAZ1454'
+        boundariesLabels: 'TAZ'
+        dataset: "vmt_per_capita_by_taz.csv"
+        datasetJoinCol: "TAZ"
+        datasetValue: '2025'
+        exponentColors: false
+
+  row2:
+    - title: "2035 VMT Per Capita"
+      description: Vehicle Miles Traveled Per Capita by Jurisdiction - All Trips
+      type: "map"
+      height: 7
+      props:
+        boundaries: 'cities.geojson'
+        boundariesJoinCol: 'Name'
+        boundariesLabels: 'City'
+        dataset: "vmt_per_capita_by_city.csv"
+        datasetJoinCol: "homeCity"
+        datasetValue: '2035'
+        exponentColors: false
+    - title: "2035 VMT Per Capita"
+      description: Vehicle Miles Traveled Per Capita by Traffic Analysis Zone (TAZ) - All Trips
+      type: "map"
+      height: 7
+      props:
+        boundaries: 'taz_chester.geojson'
+        boundariesJoinCol: 'TAZ1454'
+        boundariesLabels: 'TAZ'
+        dataset: "vmt_per_capita_by_taz.csv"
+        datasetJoinCol: "TAZ"
+        datasetValue: '2035'
+        exponentColors: false
+
+  row3:
+    - title: "2050 VMT Per Capita"
+      description: Vehicle Miles Traveled Per Capita by Jurisdiction - All Trips
+      type: "map"
+      height: 7
+      props:
+        boundaries: 'cities.geojson'
+        boundariesJoinCol: 'Name'
+        boundariesLabels: 'City'
+        dataset: "vmt_per_capita_by_city.csv"
+        datasetJoinCol: "homeCity"
+        datasetValue: '2050'
+        exponentColors: false
+    - title: "2050 VMT Per Capita"
+      description: Vehicle Miles Traveled Per Capita by Traffic Analysis Zone (TAZ) - All Trips
+      type: "map"
+      height: 7
+      props:
+        boundaries: 'taz_chester.geojson'
+        boundariesJoinCol: 'TAZ1454'
+        boundariesLabels: 'TAZ'
+        dataset: "vmt_per_capita_by_taz.csv"
+        datasetJoinCol: "TAZ"
+        datasetValue: '2050'
         exponentColors: false
