@@ -1,0 +1,79 @@
+version: 1
+
+header:
+  tab: RP Performance Measures
+  title: RP Performance Measures
+  description: "Performance measures from the 2021 SANDAG Regional Plan"
+
+layout:
+  row0:
+    - title: "VMT"
+      description: All vehicle classes regionwide
+      type: "line"
+      height: 5
+      width: 1
+      props:
+        dataset: "VMT.csv"
+        x: Year
+        columns: ["No Build", "Build"]
+        xAxisTitle: "Year"
+        yAxisTitle: "Vehicle Miles Traveled"
+    - title: "VMT per Capita"
+      description: All vehicle classes regionwide per capita
+      type: "line"
+      height: 5
+      width: 1
+      props:
+        dataset: "VMTPerCapita.csv"
+        x: Year
+        columns: ["No Build", "Build"]
+        xAxisTitle: "Year"
+        yAxisTitle: "Vehicle Miles Traveled"
+
+  row1:
+    - title: "On-Road CO2 Emissions"
+      description: SB 375 All On-road CO2 emissions (tons/day) (excludeing E-E VMT emission)
+      type: "line"
+      height: 5
+      width: 1
+      props:
+        dataset: "CO2Emmissions.csv"
+        x: Year
+        columns: ["No Build", "Build"]
+        xAxisTitle: "Year"
+        yAxisTitle: "Tons of CO2"
+    - title: "On-Road CO2 Emissions per Capita"
+      description: SB 375 All On-road CO2 emissions (pounds/day) per capita
+      type: "line"
+      height: 5
+      width: 1
+      props:
+        dataset: "CO2EmmissionsPerCapita.csv"
+        x: Year
+        columns: ["No Build", "Build"]
+        xAxisTitle: "Year"
+        yAxisTitle: "Tons of CO2"
+
+  row2:
+    - title: "PM 2.5"
+      description: Particulate Matter 2.5
+      type: "line"
+      height: 5
+      width: 1
+      props:
+        dataset: "PM2_5.csv"
+        x: Year
+        columns: ["No Build", "Build"]
+        xAxisTitle: "Year"
+        yAxisTitle: "Average Particulate Matter"
+    - title: "PM 2.5 by Minority Status"
+      description: Particulate Matter 2.5 by minority status
+      type: "line"
+      height: 5
+      width: 1
+      props:
+        dataset: "PM2_5_ByMinorityStatus.csv"
+        x: Year
+        columns: ["No Build (Minority)", "No Build (Non-Minority)", "Build (Minority)", "Build (Non-Minority)"]
+        xAxisTitle: "Year"
+        yAxisTitle: "Average Particulate Matter"

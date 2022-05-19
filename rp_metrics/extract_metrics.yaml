@@ -4,12 +4,12 @@ tables:
   PrimaryMeasures:
     infile: PerformanceMeasures_FinalPlan.xlsx
     input_args:
-      sheet_name: PrimaryMeasures
       header:
       skiprows: 4
       usecols: [3, 4, 5, 6, 7, 8, 9]
+    index_name: Year
     scenarios:
-      NoBuild:
+      No Build:
         2016: 3
         2025: 4
         2035: 5
@@ -24,3 +24,37 @@ tables:
       VMTPerCapita: 35
       CO2Emmissions: 31
       CO2EmmissionsPerCapita: 32
+      PctWithin15minWalkOfRetail: 0
+
+  particulateMatter:
+    infile: PerformanceMeasures_FinalPlan.xlsx
+    input_args:
+      header:
+      skiprows: 4
+      usecols: [3, 4, 5, 6, 7, 8, 9]
+    index_name: Year
+    scenarios:
+      No Build:
+        2016: 3
+        2025: 4
+        2035: 5
+        2050: 6
+      Build:
+        2016: 3
+        2025: 7
+        2035: 8
+        2050: 9
+    measures:
+      PM2_5: 0
+      PM2_5_Minority: 9
+      PM2_5_NonMinority: 12
+
+merge:
+  PM2_5_ByMinorityStatus:
+    left: PM2_5_Minority
+    right: PM2_5_NonMinority
+    args:
+      'on': Year
+      suffixes:
+        - ' (Minority)'
+        - ' (Non-Minority)'
