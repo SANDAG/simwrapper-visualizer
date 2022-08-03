@@ -77,3 +77,16 @@ layout:
         columns: ["No Build (Minority)", "No Build (Non-Minority)", "Build (Minority)", "Build (Non-Minority)"]
         xAxisTitle: "Year"
         yAxisTitle: "Average Particulate Matter"
+        
+  row3:
+    - title: "14.3.0 Transit Boardings By Year"
+      description: "Transit boardings by year in Release 14.3.0 Tests"
+      type: "line"
+      height: 10
+      width: 1
+      props:
+        dataset: "transit_boardings_by_year_rp.csv"
+        x: Year
+        columns: ["Region", "MoHub"]
+        xAxisTitle: "Year (Anno Domini)"
+        yAxisTitle: "Total Boardings on Public Transit"
